@@ -15,6 +15,53 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="config-toolbox" style="display: none">
+      <category name="Darkbot">
+        <block type="event_broadcast">
+          <value name="CHOICE">
+            <shadow type="dropdown_broadcast">
+              <field name="CHOICE">blue</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="event_broadcast">
+          <value name="CHOICE">
+            <shadow type="dropdown_broadcast">
+              <field name="CHOICE">green</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="control_forever"></block>
+        <block type="foo_bar">
+          <value name="TIMES">
+            <shadow type="math_whole_number">
+              <field name="NUM">4</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="control_stop"></block>
+      </category>
+    </xml>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="config-workspace" style="display: none">
+      <block type="event_whenflagclicked" x="64" y="64"></block>
+      <block type="event_whenbroadcastreceived" x="64" y="192">
+        <value name="CHOICE">
+          <shadow type="dropdown_whenbroadcast">
+            <field name="CHOICE">blue</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="event_whenbroadcastreceived" x="64" y="320">
+        <value name="CHOICE">
+          <shadow type="dropdown_whenbroadcast">
+            <field name="CHOICE">green</field>
+          </shadow>
+        </value>
+      </block>
+    </xml>
+
     <div id="root"></div>
     <!--
       This HTML file is a template.

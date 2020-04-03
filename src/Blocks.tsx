@@ -1,10 +1,11 @@
 import React from "react"
-import ScratchBlocks from "scratch-blocks/dist/horizontal"
+import ScratchBlocks from "./customBlocks"
 
 let id = 0
 function generateId() {
     return id++
 }
+
 
 export default class Blocks<P, S> extends React.Component<P, S>
 {
@@ -17,8 +18,13 @@ export default class Blocks<P, S> extends React.Component<P, S>
 
     componentDidMount() {
         this.workspace = ScratchBlocks.inject(this.id, {
-            horizontalLayout: true,
-            media: './media/'
+            horizontalLayout: false,
+            media: './media/',
+            comments: false,
+            toolbox: document.getElementById('config-toolbox')!
         })
+
+        const workspaceConfig = document.getElementById('config-workspace')!
+        ScratchBlocks.Xml.domToWorkspace(workspaceConfig, this.workspace)
     }
 }
