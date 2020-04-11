@@ -20,9 +20,7 @@
       <category name="Darkbot">
         <block type="event_broadcast">
           <value name="CHOICE">
-            <shadow type="dropdown_broadcast">
-              <field name="CHOICE">blue</field>
-            </shadow>
+            <field name="CHOICE">blue</field>
           </value>
         </block>
         <block type="event_broadcast">
@@ -45,15 +43,21 @@
     </xml>
 
     <xml xmlns="https://developers.google.com/blockly/xml" id="config-workspace" style="display: none">
-      <block type="event_whenflagclicked" x="64" y="64" movable="false"></block>
-      <block type="event_whenbroadcastreceived" x="64" y="192" movable="false">
+      <block type="event_whenflagclicked" x="64" y="64" movable="false" id="blockMain">
+        <next>
+          <block type="event_broadcast">
+            <value name="CHOICE">
+              <field name="CHOICE">blue</field>
+            </value>
+          </block>
+        </next>
+      </block>
+      <block type="event_whenbroadcastreceived" x="64" y="192" movable="false" id="blockP1">
         <value name="CHOICE">
-          <shadow type="dropdown_whenbroadcast">
-            <field name="CHOICE">blue</field>
-          </shadow>
+          <field name="CHOICE">blue</field>
         </value>
       </block>
-      <block type="event_whenbroadcastreceived" x="64" y="320" movable="false">
+      <block type="event_whenbroadcastreceived" x="64" y="320" movable="false" id="blockP2">
         <value name="CHOICE">
           <shadow type="dropdown_whenbroadcast">
             <field name="CHOICE">green</field>

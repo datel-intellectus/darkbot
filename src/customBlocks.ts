@@ -39,7 +39,6 @@ ScratchBlocks.Blocks['foo_bar'] = {
         })
 
         this.movable_ = false
-        console.log(this)
     }
 }
 
