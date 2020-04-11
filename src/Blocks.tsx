@@ -1,6 +1,14 @@
 import React from "react"
 import ScratchBlocks from "./customBlocks"
 type Block = ScratchBlocks.Block
+interface MoveEvent extends ScratchBlocks.Events.Move
+{
+    oldParentId?: string,
+    oldInputName: any,
+    newCoordinate?: { x: number, y: number },
+    newInputName: any,
+    newParentId?: string
+}
 
 let id = 0
 function generateId() {
@@ -21,7 +29,10 @@ export default class Blocks<P, S> extends React.Component<P, S>
         return <div id={this.id} className="blocks" />
     }
 
-    componentDidMount() {
+    componentDidMount()
+    {
+        // Set up Scratch Blocks
+
         this.workspace = ScratchBlocks.inject(this.id, {
             horizontalLayout: false,
             media: './media/',
@@ -32,9 +43,15 @@ export default class Blocks<P, S> extends React.Component<P, S>
         const workspaceConfig = document.getElementById('config-workspace')!
         ScratchBlocks.Xml.domToWorkspace(workspaceConfig, this.workspace)
 
+
+        // Remember parents
+
         this.blockMain = this.workspace.getBlockById('blockMain')
         this.blockP1 = this.workspace.getBlockById('blockP1')
         this.blockP2 = this.workspace.getBlockById('blockP1')
+
+
+        // Detect insertion preview
 
         const detectInsertionMarkers =
         (e: any) =>
@@ -53,15 +70,37 @@ export default class Blocks<P, S> extends React.Component<P, S>
             }
         }
 
-        this.workspace!.addChangeListener(detectInsertionMarkers)
+        this.workspace.addChangeListener(detectInsertionMarkers)
         window.addEventListener('mousemove', detectInsertionMarkers, true)
 
+
+        // Detect insertion
+
+        this.workspace.addChangeListener(
+            (e: MoveEvent) =>
+            {
+                if (e.type !== 'move') return
+                if (e.oldParentId) return
+
+                const block = this.workspace!.getBlockById(e.blockId)
+                if (!block) return
+
+                const parent = getTopStackBlock(block)
+                if (!parent) return
+
+                this.onInsertion(block, parent)
+            }
+        )
     }
 
     onInsertionPreview(marker: Block, parent: Block)
     {
         marker.setColour('#ff0000')
-        console.log(parent.id)
+    }
+
+    onInsertion(block: Block, parent: Block)
+    {
+        cancelInsertion(block)
     }
 
 
@@ -79,4 +118,19 @@ function getTopStackBlock(block: Block): Block|null
     }
 
     return parent
+}
+
+function cancelInsertion(block: Block)
+{
+    const next = block.getNextBlock() as Block|null
+    const prev = block.getPreviousBlock() as Block|null
+
+    // no idea why can't we dispose now
+    // blockly api is black magic
+    block.unplug()
+
+    if (prev && next)
+        prev.nextConnection.connect(next.previousConnection)
+
+    block.dispose(false)
 }
