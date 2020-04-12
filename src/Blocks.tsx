@@ -15,10 +15,15 @@ function generateId() {
     return id++
 }
 
+let global:
+    typeof window &
+    { workspaces?: { [id: string]: ScratchBlocks.WorkspaceSvg } }
+    = window
+
 
 export default class Blocks<P, S> extends React.Component<P, S>
 {
-    id = "blocks-" + generateId()
+    id = "blocks" + generateId()
     workspace: ScratchBlocks.WorkspaceSvg | null = null
 
     blockMain: Block|null = null
@@ -44,6 +49,14 @@ export default class Blocks<P, S> extends React.Component<P, S>
         ScratchBlocks.Xml.domToWorkspace(workspaceConfig, this.workspace)
 
 
+        // Set up debugging hooks
+
+        if (!global.workspaces)
+            global.workspaces = {}
+
+        global.workspaces[this.id] = this.workspace
+
+
         // Remember parents
 
         this.blockMain = this.workspace.getBlockById('blockMain')
@@ -63,7 +76,7 @@ export default class Blocks<P, S> extends React.Component<P, S>
             {
                 if (!block.isInsertionMarker()) continue
 
-                let parent = getTopStackBlock(block)
+                let parent = getTopBlock(block)
                 if (!parent) return
 
                 this.onInsertionPreview(block, parent)
@@ -85,7 +98,7 @@ export default class Blocks<P, S> extends React.Component<P, S>
                 const block = this.workspace!.getBlockById(e.blockId)
                 if (!block) return
 
-                const parent = getTopStackBlock(block)
+                const parent = getTopBlock(block)
                 if (!parent) return
 
                 this.onInsertion(block, parent)
@@ -106,18 +119,37 @@ export default class Blocks<P, S> extends React.Component<P, S>
 
 }
 
-function getTopStackBlock(block: Block): Block|null
+function getTopBlock(block: Block): Block|null
 {
     let previous = block.getParent()
-    let parent: Block|null = null
+    let top: Block|null = null
 
     while (previous !== null)
     {
-        parent = previous
-        previous = parent.getParent()
+        top = previous
+        previous = top.getParent()
     }
 
-    return parent
+    return top
+}
+
+function getBottomBlock(block: Block): Block|null
+{
+    let next = block.getNextBlock()
+    let bottom: Block|null = null
+
+    while (next !== null)
+    {
+        bottom = next
+        next = bottom.getNextBlock()
+    }
+
+    return bottom
+}
+
+function appendChild(parent: Block, child: Block)
+{
+    parent.nextConnection.connect(child.previousConnection)
 }
 
 function cancelInsertion(block: Block)
@@ -130,7 +162,7 @@ function cancelInsertion(block: Block)
     block.unplug()
 
     if (prev && next)
-        prev.nextConnection.connect(next.previousConnection)
+        appendChild(prev, next)
 
     block.dispose(false)
 }

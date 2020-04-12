@@ -16,54 +16,30 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
 
+    <!-- The Toolbox -->
     <xml xmlns="https://developers.google.com/blockly/xml" id="config-toolbox" style="display: none">
-      <category name="Darkbot">
-        <block type="event_broadcast">
-          <value name="CHOICE">
-            <field name="CHOICE">blue</field>
-          </value>
-        </block>
-        <block type="event_broadcast">
-          <value name="CHOICE">
-            <shadow type="dropdown_broadcast">
-              <field name="CHOICE">green</field>
-            </shadow>
-          </value>
-        </block>
-        <block type="control_forever"></block>
-        <block type="foo_bar">
-          <value name="TIMES">
-            <shadow type="math_whole_number">
-              <field name="NUM">4</field>
-            </shadow>
-          </value>
-        </block>
+      <category name="Movement">
+        <block type="control_forward"></block>
+        <block type="control_turn_right"></block>
+        <block type="control_turn_left"></block>
+        <block type="control_toggle_light"></block>
+      </category>
+      <category name="Control">
+        <block type="control_p1"></block>
+        <block type="control_p2"></block>
         <block type="control_stop"></block>
       </category>
     </xml>
 
+    <!-- The Workspace -->
     <xml xmlns="https://developers.google.com/blockly/xml" id="config-workspace" style="display: none">
-      <block type="event_whenflagclicked" x="64" y="64" movable="false" id="blockMain">
+      <block type="event_main" x="64" y="64" movable="false" id="blockMain">
         <next>
-          <block type="event_broadcast">
-            <value name="CHOICE">
-              <field name="CHOICE">blue</field>
-            </value>
-          </block>
+          <block type="control_p1"></block>
         </next>
       </block>
-      <block type="event_whenbroadcastreceived" x="64" y="192" movable="false" id="blockP1">
-        <value name="CHOICE">
-          <field name="CHOICE">blue</field>
-        </value>
-      </block>
-      <block type="event_whenbroadcastreceived" x="64" y="320" movable="false" id="blockP2">
-        <value name="CHOICE">
-          <shadow type="dropdown_whenbroadcast">
-            <field name="CHOICE">green</field>
-          </shadow>
-        </value>
-      </block>
+      <block type="event_p1" x="64" y="192" movable="false" id="blockP1"></block>
+      <block type="event_p2" x="64" y="320" movable="false" id="blockP2"></block>
     </xml>
 
     <div id="root"></div>
