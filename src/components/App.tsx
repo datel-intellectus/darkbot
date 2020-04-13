@@ -2,7 +2,7 @@ import React from 'react';
 import '../App.css';
 import { Blocks } from './Blocks';
 import { WorldView } from './WorldView';
-import { ViewElement } from './ViewElement';
+import { Tiles } from '../tiles';
 
 
 export class App<P, S> extends React.Component<P, S>
@@ -17,9 +17,11 @@ export class App<P, S> extends React.Component<P, S>
 					onInsertionPreview={this.onInsertionPreview}
 				/>
 				<WorldView id="worldview">
-					<ViewElement worldPosition={{ x: 0, y: 0, z: 0 }} screenOffset={{ x: 0, y: 0 }}>
-						<img src="media/tile.svg" alt="" />
-					</ViewElement>
+					<Tiles.Floor worldPosition={{ x: 0, y: 1, z: 0 }} />
+					<Tiles.Floor worldPosition={{ x: 1, y: 0, z: 0 }} />
+					<Tiles.Floor worldPosition={{ x: 2, y: 0, z: 0 }} />
+					<Tiles.Floor worldPosition={{ x: 0, y: 0, z: 1 }} />
+					<Tiles.Floor worldPosition={{ x: 0, y: 0, z: 2 }} />
 				</WorldView>
 			</div>
 		);

@@ -1,36 +1,57 @@
 import React from "react"
+import { Vector2 } from "./ViewElement"
 
-export interface WorldViewProps
-extends React.Props<unknown>
+
+// WorldContext
+
+export interface WorldContext
 {
-	id?: string,
-	children?: JSX.Element | JSX.Element[]
+	worldDimensions: Vector2
 }
 
-export class WorldView<P extends WorldViewProps = WorldViewProps, S = {}>
-extends React.Component<P, S>
+export const WorldContext = React.createContext<WorldContext>({
+	worldDimensions: { x: 0, y: 0 }
+});
+
+
+// WorldView
+
+export interface WorldViewProps
+extends React.Props<any>
+{
+	id?: string
+}
+
+export interface WorldViewState
+{
+	width: number,
+	height: number
+}
+
+export class WorldView<P extends WorldViewProps = WorldViewProps>
+extends React.Component<P, WorldViewState>
 {
 	element = React.createRef<HTMLDivElement>()
 
-	width = 0
-	height = 0
+	state = {
+		width: 0,
+		height: 0
+	}
 
 	render()
 	{
-		console.log(this.props.children)
-
-		let children: WorldViewProps['children'] = this.props.children
-		if (!children) children = []
-		if (!Array.isArray(children)) children = [children]
-
-		children = children.map(this.mapChildren)
-
-		return <div id={this.props.id} ref={this.element}>{children}</div>
+		return <div id={this.props.id} ref={this.element}>
+			<WorldContext.Provider value={this.makeContext()}>
+				{this.props.children}
+			</WorldContext.Provider>
+		</div>
 	}
 
-	mapChildren = (ch: JSX.Element) =>
+	makeContext = (): WorldContext =>
 	{
-		return <div style={{top: '20px', left: '10px'}}>{ch}</div>
+		return {
+			worldDimensions: { x: this.state.width, y: this.state.height }
+		}
 	}
 
 	componentDidMount()
@@ -42,8 +63,6 @@ extends React.Component<P, S>
 	onResize = () =>
 	{
 		let boundingRect = this.element.current!.getBoundingClientRect()
-		this.width = boundingRect.width
-		this.height = boundingRect.height
-		this.forceUpdate()
+		this.setState({ width: boundingRect.width, height: boundingRect.height })
 	}
 }
