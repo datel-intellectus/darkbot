@@ -12,3 +12,6 @@ cd darkbot
 yarn
 yarn start
 ```
+
+## Attribution
+Temporary robot artwork ([`rust-sprites`](https://opengameart.org/content/rust-sprites)) by Mikhail from [virtualtoy.me](http://virtualtoy.me).
