@@ -1,4 +1,4 @@
-import ScratchBlocks from "./customBlocks"
+import ScratchBlocks from "../customBlocks"
 type Block = ScratchBlocks.Block
 
 export function getTopBlock(block: Block): Block|null

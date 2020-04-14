@@ -1,6 +1,5 @@
 import React from 'react';
-import '../App.css';
-import { Blocks } from './Blocks';
+import { BlockView } from './BlockView';
 import { WorldView } from './WorldView';
 import { Tiles } from '../tiles';
 
@@ -11,7 +10,7 @@ export class App<P, S> extends React.Component<P, S>
 	{
 		return (
 			<div className="expand flex">
-				<Blocks
+				<BlockView
 					id="blocks"
 					onInsertion={this.onInsertion}
 					onInsertionPreview={this.onInsertionPreview}

@@ -1,6 +1,6 @@
 import React from "react"
 import ScratchBlocks from "../customBlocks"
-import { getTopBlock } from "../scratchBlocksUtils"
+import { getTopBlock } from "../utils/scratchBlocks"
 type Block = ScratchBlocks.Block
 interface MoveEvent extends ScratchBlocks.Events.Move
 {
@@ -26,9 +26,7 @@ let global:
 	= window
 
 
-
-
-export interface BlocksProps
+export interface BlockViewProps
 extends React.Props<unknown>
 {
 	id?: string,
@@ -36,7 +34,7 @@ extends React.Props<unknown>
 	onInsertionPreview?: (marker: Block, parent: Block) => void
 }
 
-export class Blocks<P extends BlocksProps = BlocksProps, S = {}>
+export class BlockView<P extends BlockViewProps = BlockViewProps, S = {}>
 extends React.Component<P, S>
 {
 	id: string =
