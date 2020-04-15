@@ -1,6 +1,5 @@
 import Level from "./level";
-import { Vector3 } from "./components/ViewElement";
-import { Direction } from "./robots";
+import { Vector2, Vector3, Direction } from "./spatial";
 import { Workspace } from "./components/BlockView";
 import { Block } from "scratch-blocks";
 
@@ -38,7 +37,7 @@ export class VirtualMachine
 
         const player = level.player
         this.playerDir = player.startingDirection
-        this.playerPos = { x: player.startingPosition.x, z: player.startingPosition.y, y: 0 }
+        this.playerPos = Vector2.toVector3(player.startingPosition)
         const pp = this.playerPos
 
         if (level.tiles[pp.x] && level.tiles[pp.x][pp.z])

@@ -1,5 +1,6 @@
 import React from "react";
-import { ViewElement, Vector3 } from "./components/ViewElement";
+import { Vector3 } from "./spatial"
+import { ViewElement } from "./components/ViewElement";
 
 export interface TileProps
 extends React.Props<any>

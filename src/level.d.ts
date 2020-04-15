@@ -1,5 +1,4 @@
-import { Direction } from "./robots";
-import { Vector2 } from "./components/ViewElement";
+import { Vector2, Direction } from "./spatial";
 
 export default interface Level
 {

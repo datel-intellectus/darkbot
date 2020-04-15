@@ -1,12 +1,23 @@
 import React from "react";
-import { ViewElement, Vector3 } from "./components/ViewElement";
+import { Vector3, Direction } from "./spatial"
+import { ViewElement } from "./components/ViewElement";
 
-export enum Direction
+function dirNum(dir: Direction): number
 {
-    NW = 3,
-    NE = 4,
-    SE = 1,
-    SW = 2
+    switch (dir)
+    {
+        case Direction.NW:
+            return 3
+
+        case Direction.NE:
+            return 4
+
+        case Direction.SE:
+            return 1
+
+        case Direction.SW:
+            return 2
+    }
 }
 
 export interface RobotProps
@@ -23,8 +34,10 @@ export const Robots =
     {
         render()
         {
+            const direction = dirNum(this.props.direction)
+
             return <ViewElement screenOffset={{ x: -30, y: -80 }} {...this.props}>
-                <img src={`media/rust-sprites/enemy_4_${this.props.direction}.png`} alt="" />
+                <img src={`media/rust-sprites/enemy_4_${direction}.png`} alt="" />
             </ViewElement>
         }
     }

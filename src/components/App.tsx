@@ -1,11 +1,14 @@
 import React from 'react'
+import { Direction } from '../spatial'
+
 import { BlockView, Workspace } from './BlockView'
 import { WorldView } from './WorldView'
-import { Tiles } from '../tiles'
-import { Robots, Direction } from '../robots'
-import { VirtualMachine } from '../vm'
-import levels from '../levels'
 import { ViewElement } from './ViewElement'
+
+import levels from '../levels'
+import { Tiles } from '../tiles'
+import { Robots } from '../robots'
+import { VirtualMachine } from '../vm'
 
 
 

@@ -1,18 +1,7 @@
 import React from "react"
 import { WorldContext } from "./WorldView"
+import { Vector2, Vector3 } from "../spatial"
 
-export interface Vector3
-{
-    x: number,
-    y: number,
-    z: number
-}
-
-export interface Vector2
-{
-    x: number,
-    y: number
-}
 
 export interface ViewElementProps
 extends React.Props<any>
