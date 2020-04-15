@@ -11,6 +11,19 @@ interface MoveEvent extends ScratchBlocks.Events.Move
 	newParentId?: string
 }
 
+export interface Workspace
+extends ScratchBlocks.WorkspaceSvg
+{
+	blockDB_:
+	{
+		[id: string]: Block | undefined
+
+		blockMain: Block
+		blockP1: Block
+		blockP2: Block
+	}
+}
+
 let id = 0
 function generateId() {
 	return id++
@@ -22,7 +35,7 @@ function isIdUnique(id: string) {
 
 let global:
 	typeof window &
-	{ workspaces?: { [id: string]: ScratchBlocks.WorkspaceSvg } }
+	{ workspaces?: { [id: string]: Workspace } }
 	= window
 
 
@@ -31,7 +44,8 @@ extends React.Props<unknown>
 {
 	id?: string,
 	onInsertion?: (block: Block, parent: Block) => void,
-	onInsertionPreview?: (marker: Block, parent: Block) => void
+	onInsertionPreview?: (marker: Block, parent: Block) => void,
+	getWorkspace?: (workspace: Workspace) => void
 }
 
 export class BlockView<P extends BlockViewProps = BlockViewProps, S = {}>
@@ -42,7 +56,7 @@ extends React.Component<P, S>
 		? this.props.id!
 		: "blocks" + generateId()
 
-	workspace: ScratchBlocks.WorkspaceSvg | null = null
+	workspace: Workspace | null = null
 
 	blockMain: Block|null = null
 	blockP1: Block|null = null
@@ -61,9 +75,9 @@ extends React.Component<P, S>
 			media: './scratch-blocks-media/',
 			comments: false,
 			toolbox: document.getElementById('config-toolbox')!
-		})
+		}) as Workspace
 
-		this.workspace.getInjectionDiv().setAttribute('class', 'expand')
+		this.workspace.getInjectionDiv().classList.add('expand')
 
 		const workspaceConfig = document.getElementById('config-workspace')!
 		ScratchBlocks.Xml.domToWorkspace(workspaceConfig, this.workspace)
@@ -126,5 +140,8 @@ extends React.Component<P, S>
 				if (onInsertion) onInsertion(block, parent)
 			}
 		)
+
+		if (this.props.getWorkspace)
+			this.props.getWorkspace(this.workspace)
 	}
 }

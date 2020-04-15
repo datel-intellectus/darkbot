@@ -2,6 +2,13 @@ declare module "scratch-blocks"
 {
     export * from "blockly"
     export { default } from "blockly"
+
+    import { Block as GoogleBlock } from "blockly"
+    export interface Block extends GoogleBlock
+    {
+        isGlowingBlock_: boolean,
+        setGlowBlock: (boolean) => void
+    }
 }
 
 declare module "scratch-blocks/dist/vertical"
