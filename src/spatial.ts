@@ -11,11 +11,6 @@ export interface Vector3
     z: number
 }
 
-export enum Direction
-{
-    NW, NE, SE, SW
-}
-
 export namespace Vector2
 {
     export function toVector3(vec: Vector2): Vector3
@@ -37,8 +32,22 @@ export namespace Vector3
     }
 }
 
+
+export enum Direction_
+{
+    NW, NE, SE, SW
+}
+
+export const { NW, NE, SE, SW } = Direction_
+
+export type Direction = Direction_
 export namespace Direction
 {
+    export const NW = Direction_.NW
+    export const NE = Direction_.NE
+    export const SE = Direction_.SE
+    export const SW = Direction_.SW
+
     export function toVector2(dir: Direction): Vector2
     {
         switch (dir)

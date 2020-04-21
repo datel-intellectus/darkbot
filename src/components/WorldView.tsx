@@ -1,5 +1,5 @@
 import React from "react"
-import { Vector2 } from "./ViewElement"
+import { Vector2 } from "../spatial"
 
 
 // WorldContext

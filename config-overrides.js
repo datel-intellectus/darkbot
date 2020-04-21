@@ -1,10 +1,10 @@
 const {
     override,
-    addExternalBabelPlugin
+    addBabelPlugin
   } = require("customize-cra");
 
 module.exports = override(
-    addExternalBabelPlugin([
+    addBabelPlugin([
         "@babel/plugin-transform-typescript",
         { allowNamespaces: true }
     ])
