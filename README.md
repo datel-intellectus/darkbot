@@ -12,6 +12,7 @@ cd darkbot
 yarn
 yarn start
 ```
+NOTE: On Windows there are some problems with loading assets. Related to [this bug](https://github.com/webpack/webpack/issues/1643) in webpack.
 
 ## Attribution
 Temporary robot artwork ([`rust-sprites`](https://opengameart.org/content/rust-sprites)) by Mikhail from [virtualtoy.me](http://virtualtoy.me).
