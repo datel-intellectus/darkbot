@@ -36,7 +36,7 @@ export const Robots =
         {
             const direction = dirNum(this.props.direction)
 
-            return <ViewElement screenOffset={{ x: -30, y: -80 }} {...this.props}>
+            return <ViewElement screenOffset={{ x: -30, y: -80+32 }} {...this.props}>
                 <img src={`media/rust-sprites/enemy_4_${direction}.png`} alt="" />
             </ViewElement>
         }

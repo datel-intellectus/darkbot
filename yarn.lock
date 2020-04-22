@@ -1153,6 +1153,18 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
+"@meta-utils/events@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@meta-utils/events/-/events-1.2.0.tgz#04648978cb73010d50beee707fcacf411ff710b6"
+  integrity sha512-Rb8RlwoQDmzjH8YvkbYMSSULjSPPS4oDOQDDNvqXRsIrSh8R8asGexb8vMGIWVYOOR9UDxbA9HAe3xOBos9u6Q==
+  dependencies:
+    "@meta-utils/types" "^1.0.0"
+
+"@meta-utils/types@^1.0.0", "@meta-utils/types@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@meta-utils/types/-/types-1.0.1.tgz#ac80f518a42f9a0c7a98948bf6dde663fbce08db"
+  integrity sha512-G/yYcG5iG0w5+T5xT/5vtLgp1a3s+YE9VhpUUAAul8mCHD+uszT5ya59BJ9xmj8NBBob0MLp621edAOEPXmTKw==
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"

@@ -20,6 +20,7 @@ export class App<P, S> extends React.Component<P, S>
 	getWorkspace = (workspace: Workspace) =>
 	{
 		this.vm = new VirtualMachine(workspace, this.level)
+		this.vm.addEventListener('robotChangePosition', this.onPlayerMove)
 		this.forceUpdate()
 	}
 
@@ -66,6 +67,11 @@ export class App<P, S> extends React.Component<P, S>
 	onStop = () =>
 	{
 		this.vm?.stop()
+	}
+
+	onPlayerMove = () =>
+	{
+		this.forceUpdate()
 	}
 }
 
