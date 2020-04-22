@@ -166,7 +166,7 @@ ScratchBlocks.Blocks['control_forward'] = {
 			"args0": [
 				{
 					"type": "field_image",
-					"src": "./scratch-blocks-media/icons/arrow_button.svg",
+					"src": "./media/arrow_forward.svg",
 					"width": 40,
 					"height": 40,
 					"alt": "Forward"
@@ -197,7 +197,7 @@ ScratchBlocks.Blocks['control_turn_right'] = {
 			"args0": [
 				{
 					"type": "field_image",
-					"src": "./scratch-blocks-media/icons/wedo_motor-clockwise.svg",
+					"src": "./media/arrow_cw.svg",
 					"width": 40,
 					"height": 40,
 					"alt": "Turn right"
@@ -228,10 +228,41 @@ ScratchBlocks.Blocks['control_turn_left'] = {
 			"args0": [
 				{
 					"type": "field_image",
-					"src": "./scratch-blocks-media/icons/wedo_motor-counterclockwise.svg",
+					"src": "./media/arrow_ccw.svg",
 					"width": 40,
 					"height": 40,
 					"alt": "Turn left"
+				}
+			],
+			"inputsInline": true,
+			"previousStatement": null,
+			"nextStatement": null,
+			"category": (ScratchBlocks as any).Categories.control,
+			"colour": (ScratchBlocks as any).Colours.control.primary,
+			"colourSecondary": (ScratchBlocks as any).Colours.control.secondary,
+			"colourTertiary": (ScratchBlocks as any).Colours.control.tertiary,
+			"tooltip": "Turn left"
+		});
+	}
+};
+
+
+ScratchBlocks.Blocks['control_jump'] = {
+	/**
+	 * Block to turn left
+	 * @this Blockly.Block
+	 */
+	init: function(this: any) {
+		this.jsonInit({
+			"id": "control_jump",
+			"message0": "%1",
+			"args0": [
+				{
+					"type": "field_image",
+					"src": "./media/arrow_jump.svg",
+					"width": 40,
+					"height": 40,
+					"alt": "Jump up and forward"
 				}
 			],
 			"inputsInline": true,

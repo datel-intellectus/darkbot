@@ -27,16 +27,20 @@ extends React.Component<P, S>
 
 const floor = Math.floor;
 
-function getTransformation(dimensions: Vector2, offset: Vector2, world: Vector3): { top: string, left: string }
+function getTransformation(dimensions: Vector2, offset: Vector2, world: Vector3):
+{ top: string, left: string, zIndex: number }
 {
 	const vec: Vector2 =
 	{
 		x: floor(dimensions.x/2) + offset.x + (world.x - world.z)*64,
 		y: floor(dimensions.y/2) + offset.y + (world.x + world.z)*32 - world.y*32
-	}
+    }
+
+    const z = world.x + world.z - world.y
 
 	return {
 		left: vec.x + 'px',
-		top: vec.y + 'px'
+        top: vec.y + 'px',
+        zIndex: z
 	}
 }
