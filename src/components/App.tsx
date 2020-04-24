@@ -53,7 +53,7 @@ export class App<P, S> extends React.Component<P, S>
 					</ViewElement>
 				</WorldView>
 			</div>
-		);
+		)
 	}
 
 	onInsertion() {}
@@ -75,4 +75,4 @@ export class App<P, S> extends React.Component<P, S>
 	}
 }
 
-export default App;
+export default App

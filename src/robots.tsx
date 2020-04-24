@@ -1,6 +1,6 @@
-import React from "react";
+import React from "react"
 import { Vector3, Direction } from "./spatial"
-import { ViewElement } from "./components/ViewElement";
+import { ViewElement } from "./components/ViewElement"
 
 function dirNum(dir: Direction): number
 {

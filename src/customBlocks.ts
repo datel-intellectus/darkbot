@@ -27,9 +27,9 @@ ScratchBlocks.Blocks['event_main'] = {
 			"colourSecondary": (ScratchBlocks as any).Colours.event.secondary,
 			"colourTertiary": (ScratchBlocks as any).Colours.event.tertiary,
 			"tooltip": "The main program"
-		});
+		})
 	}
-};
+}
 
 
 ScratchBlocks.Blocks['event_p1'] = {
@@ -57,9 +57,9 @@ ScratchBlocks.Blocks['event_p1'] = {
 			"colourSecondary": (ScratchBlocks as any).Colours.event.secondary,
 			"colourTertiary": (ScratchBlocks as any).Colours.event.tertiary,
 			"tooltip": "The blue subprogram"
-		});
+		})
 	}
-};
+}
 
 
 ScratchBlocks.Blocks['event_p2'] = {
@@ -87,9 +87,9 @@ ScratchBlocks.Blocks['event_p2'] = {
 			"colourSecondary": (ScratchBlocks as any).Colours.event.secondary,
 			"colourTertiary": (ScratchBlocks as any).Colours.event.tertiary,
 			"tooltip": "The red subprogram"
-		});
+		})
 	}
-};
+}
 
 
 ScratchBlocks.Blocks['control_p1'] = {
@@ -118,9 +118,9 @@ ScratchBlocks.Blocks['control_p1'] = {
 			"colourSecondary": (ScratchBlocks as any).Colours.control.secondary,
 			"colourTertiary": (ScratchBlocks as any).Colours.control.tertiary,
 			"tooltip": "Execute the blue subprogram"
-		});
+		})
 	}
-};
+}
 
 
 ScratchBlocks.Blocks['control_p2'] = {
@@ -149,9 +149,9 @@ ScratchBlocks.Blocks['control_p2'] = {
 			"colourSecondary": (ScratchBlocks as any).Colours.control.secondary,
 			"colourTertiary": (ScratchBlocks as any).Colours.control.tertiary,
 			"tooltip": "Execute the red subprogram"
-		});
+		})
 	}
-};
+}
 
 
 ScratchBlocks.Blocks['control_forward'] = {
@@ -180,9 +180,9 @@ ScratchBlocks.Blocks['control_forward'] = {
 			"colourSecondary": (ScratchBlocks as any).Colours.control.secondary,
 			"colourTertiary": (ScratchBlocks as any).Colours.control.tertiary,
 			"tooltip": "Move forward"
-		});
+		})
 	}
-};
+}
 
 
 ScratchBlocks.Blocks['control_turn_right'] = {
@@ -211,9 +211,9 @@ ScratchBlocks.Blocks['control_turn_right'] = {
 			"colourSecondary": (ScratchBlocks as any).Colours.control.secondary,
 			"colourTertiary": (ScratchBlocks as any).Colours.control.tertiary,
 			"tooltip": "Turn right"
-		});
+		})
 	}
-};
+}
 
 
 ScratchBlocks.Blocks['control_turn_left'] = {
@@ -242,9 +242,9 @@ ScratchBlocks.Blocks['control_turn_left'] = {
 			"colourSecondary": (ScratchBlocks as any).Colours.control.secondary,
 			"colourTertiary": (ScratchBlocks as any).Colours.control.tertiary,
 			"tooltip": "Turn left"
-		});
+		})
 	}
-};
+}
 
 
 ScratchBlocks.Blocks['control_jump'] = {
@@ -273,9 +273,9 @@ ScratchBlocks.Blocks['control_jump'] = {
 			"colourSecondary": (ScratchBlocks as any).Colours.control.secondary,
 			"colourTertiary": (ScratchBlocks as any).Colours.control.tertiary,
 			"tooltip": "Turn left"
-		});
+		})
 	}
-};
+}
 
 
 ScratchBlocks.Blocks['control_toggle_light'] = {
@@ -304,8 +304,8 @@ ScratchBlocks.Blocks['control_toggle_light'] = {
 			"colourSecondary": (ScratchBlocks as any).Colours.control.secondary,
 			"colourTertiary": (ScratchBlocks as any).Colours.control.tertiary,
 			"tooltip": "Turn the light on this block on/off"
-		});
+		})
 	}
-};
+}
 
 export default ScratchBlocks

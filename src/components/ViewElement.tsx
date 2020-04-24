@@ -25,7 +25,7 @@ extends React.Component<P, S>
 }
 
 
-const floor = Math.floor;
+const floor = Math.floor
 
 function getTransformation(dimensions: Vector2, offset: Vector2, world: Vector3):
 { top: string, left: string, zIndex: number }

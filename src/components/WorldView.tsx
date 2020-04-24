@@ -11,7 +11,7 @@ export interface WorldContext
 
 export const WorldContext = React.createContext<WorldContext>({
 	worldDimensions: { x: 0, y: 0 }
-});
+})
 
 
 // WorldView
