@@ -1,3 +1,11 @@
+html {
+  background: #333;
+}
+
+button {
+  background-color: #fff;
+}
+
 html, body, .expand {
   height: 100%;
   margin: 0;
@@ -22,4 +30,22 @@ html, body, .expand {
   position: absolute;
   margin: 0;
   padding: 0;
+}
+
+.injectionDiv .blocklySvg {
+  background-color: #f9f9f922;
+}
+
+.injectionDiv .blocklyFlyoutBackground,
+.injectionDiv .blocklyToolboxDiv {
+  background-color: #f9f9f9cc;
+}
+
+
+.injectionDiv .scratchCategoryMenu {
+  background: none;
+}
+
+.injectionDiv .scratchCategoryMenuItem.categorySelected {
+  background-color: #f9f9f922;
 }

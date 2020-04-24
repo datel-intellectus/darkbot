@@ -15,7 +15,7 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.4 5da689c313, 2019-01-14"
-   sodipodi:docname="tile.svg">
+   sodipodi:docname="water_side.svg">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="15.839192"
-     inkscape:cx="96.924655"
-     inkscape:cy="21.450217"
+     inkscape:zoom="2.8"
+     inkscape:cx="46.359589"
+     inkscape:cy="10.599876"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -45,7 +45,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -55,20 +55,14 @@
      id="layer1"
      transform="translate(0,-271.59999)">
     <path
-       style="fill:#a87a50;fill-opacity:1;stroke:#000000;stroke-width:0.26499999;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M -3.0147676e-7,280.06666 16.933333,288.53332 33.866667,280.06666 16.933333,271.59999 Z"
-       id="path10"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc" />
-    <path
-       style="fill:#d4d4d4;fill-opacity:1;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1"
-       d="M -3.1874401e-7,288.53332 16.933333,296.99999 v -8.46667 L -3.0147676e-7,280.06666 Z"
+       style="fill:#0c00c5;fill-opacity:0.30588235;stroke:none;stroke-width:0.26499999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M -3.1874401e-7,288.53332 16.933333,296.99999 l 0,-0.52917 L -3.0147676e-7,288.00416 Z"
        id="path837"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
     <path
-       style="fill:#e7e7e7;fill-opacity:1;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1"
-       d="m 16.933333,296.99999 16.933336,-8.46667 -3e-6,-8.46666 -16.933333,8.46666 z"
+       style="fill:#4d41ff;fill-opacity:0.30588235;stroke:none;stroke-width:0.26499999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 16.933333,296.99999 16.933336,-8.46667 -3e-6,-0.52916 -16.933333,8.46666 z"
        id="path839"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
