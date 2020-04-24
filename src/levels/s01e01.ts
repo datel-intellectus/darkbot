@@ -10,14 +10,21 @@ const level: Level =
 
 	player:
 	{
-		startingPosition: { x: 0, y: 0 },
+		startingPosition: { x: 0, y: 2, z: 0 },
 		startingDirection: 1
 	},
 
 	tiles: [
-		[ { height: 1 }, { height: 1 }, { height: 1 } ],
-		[ { height: 1 }, { height: 0 }, { height: 0 } ],
-		[ { height: 1 }, { height: 0 }, { height: 0 } ],
+		[
+			[ undefined, undefined,       undefined ],
+			[ undefined, {type: "Floor"}, {type: "Floor"} ],
+			[ undefined, {type: "Floor"}, {type: "Floor"} ],
+		],
+		[
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, undefined,       undefined ],
+			[ {type: "Floor"}, undefined,       undefined ],
+		]
 	]
 }
 

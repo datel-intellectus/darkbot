@@ -10,6 +10,8 @@ import { Tiles } from '../tiles'
 import { Robots } from '../robots'
 import { VirtualMachine } from '../vm'
 
+import { keyFor } from "../utils/keymaker"
+
 
 
 export class App<P, S> extends React.Component<P, S>
@@ -26,11 +28,15 @@ export class App<P, S> extends React.Component<P, S>
 
 	render()
 	{
-		let key = 0
 		const tiles = []
-		if (this.vm) for (const t of this.vm.tiles)
+
+		if (this.vm)
+		for (const slice of this.vm.tiles)
+		for (const column of slice)
+		for (const tile of column)
 		{
-			tiles.push(<Tiles.Floor worldPosition={t} key={key++} />)
+			if (!tile) continue
+			tiles.push(<Tiles.Floor {...tile} key={keyFor(tile)} />)
 		}
 
 		const pd = this.vm ? this.vm.playerDir : Direction.NE
@@ -61,12 +67,12 @@ export class App<P, S> extends React.Component<P, S>
 
 	onStart = () =>
 	{
-		this.vm?.start()
+		this.vm?.blocks?.start()
 	}
 
 	onStop = () =>
 	{
-		this.vm?.stop()
+		this.vm?.blocks?.stop()
 	}
 
 	onPlayerMove = () =>

@@ -1,4 +1,5 @@
-import { Vector2, Direction } from "./spatial";
+import { Vector3, Direction } from "./spatial"
+import { Tiles } from "./tiles"
 
 export default interface Level
 {
@@ -9,16 +10,17 @@ export default interface Level
 	redBlocks: number
 
 	player: Player
-	tiles: (Tile|undefined)[][]
+	/** 3-dim array in the format `[y][x][z]` */
+	tiles: (Tile|undefined)[][][]
 }
 
 interface Player
 {
 	startingDirection: Direction
-	startingPosition: Vector2
+	startingPosition: Vector3
 }
 
 interface Tile
 {
-	height: number
+	type: keyof typeof Tiles
 }
