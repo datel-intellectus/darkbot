@@ -39,9 +39,6 @@ export interface VirtualMachineEvents
 
 export class VirtualMachine extends EventTarget<VirtualMachineEvents>
 {
-    workspace: Workspace
-
-    level: Level
     playerPos: Vector3 = { x: 0, y: 0, z: 0 }
     playerDir: Direction = Direction.NE
 
@@ -52,12 +49,9 @@ export class VirtualMachine extends EventTarget<VirtualMachineEvents>
     readonly blocks: BlockRunner
     readonly water: WaterRunner
 
-    constructor(workspace: Workspace, level: Level)
+    constructor(public workspace: Workspace, public level: Level)
     {
         super()
-
-        this.workspace = workspace
-        this.level = level
 
         for (let y = 0; y < level.tiles.length;       y++)
         for (let x = 0; x < level.tiles[y].length;    x++)
@@ -83,16 +77,25 @@ export class VirtualMachine extends EventTarget<VirtualMachineEvents>
         ;(window as any).virtualMachine = this
     }
 
+    allTiles = (() =>
+    {
+        const self = this
+        return function* tileIterator()
+        {
+            for (const slice of self.tiles)
+            for (const column of slice)
+            for (const tile of column)
+            {
+                if (tile === undefined) continue
+                yield tile
+            }
+        }
+    })()
+
     resetPlayer = () =>
     {
         this.playerDir = this.level.player.startingDirection
         this.playerPos = { ...this.level.player.startingPosition }
     }
 
-
-
-
-
-
 }
-

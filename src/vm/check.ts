@@ -1,15 +1,11 @@
 import { VirtualMachine } from "."
 import { Vector3, Direction } from "../spatial"
 import { makeMultidimArray } from "../utils/multidim"
+import { WaterColumn } from "./water"
 
 export class CheckRunner
 {
-    vm: VirtualMachine
-
-    constructor(vm: VirtualMachine)
-    {
-        this.vm = vm
-    }
+    constructor(public vm: VirtualMachine) { }
 
     /** Checks whether there's a tile on this position */
     insideWall = (pos: Vector3): boolean =>
@@ -28,6 +24,17 @@ export class CheckRunner
         if (this.insideWall(pos)) return false
         if (this.insideWall({ ...pos, y: pos.y - 1 })) return true
         return false
+    }
+
+    /**
+     * Checks whether there's a tile on this
+     * position but none under it.
+     */
+    isCeiling = (pos: Vector3): boolean =>
+    {
+        if (!this.insideWall(pos)) return false
+        if (this.insideWall({ ...pos, y: pos.y - 1 })) return false
+        return true
     }
 
     /**
@@ -95,5 +102,36 @@ export class CheckRunner
     canStepUpDown = (): boolean =>
     {
         return this.canDescend() || this.canJump()
+    }
+
+    waterColumnBottom = (col: WaterColumn): number =>
+    {
+        if (col.bottom !== undefined) return col.bottom
+        if (col.floor !== undefined) return col.floor
+        return -Infinity
+    }
+
+    waterColumnTop = (col: WaterColumn): number =>
+    {
+        return col.top ?? 0
+    }
+
+    inWater = (pos: Vector3): boolean =>
+    {
+        const {x, y, z} = pos
+
+        const water = this.vm.water
+        if (!water) return false
+
+        const cols = (water.cols[x] ?? [])[z] ?? []
+
+        for (const col of cols)
+        {
+            if (this.waterColumnTop(col) < y) continue
+            if (this.waterColumnBottom(col) > y) return false
+            return true
+        }
+
+        return false
     }
 }

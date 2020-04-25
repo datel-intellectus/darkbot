@@ -61,14 +61,22 @@ export enum Direction_
 export const { NW, NE, SE, SW } = Direction_
 
 export type Direction = Direction_
-export namespace Direction
+export const Direction =
 {
-    export const NW = Direction_.NW
-    export const NE = Direction_.NE
-    export const SE = Direction_.SE
-    export const SW = Direction_.SW
+    NW: Direction_.NW as const,
+    NE: Direction_.NE as const,
+    SE: Direction_.SE as const,
+    SW: Direction_.SW as const,
 
-    export function toVector2(dir: Direction): Vector2
+    [Symbol.iterator]: function* ()
+    {
+        yield Direction.NW
+        yield Direction.NE
+        yield Direction.SE
+        yield Direction.SW
+    },
+
+    toVector2: (dir: Direction): Vector2 =>
     {
         switch (dir)
         {
@@ -84,20 +92,51 @@ export namespace Direction
             case Direction.SW:
                 return { x: 0, y: 1 }
         }
-    }
+    },
 
-    export function toVector3(dir: Direction): Vector3
+    toVector3: (dir: Direction): Vector3 =>
     {
-        return Vector2.toVector3( toVector2(dir) )
-    }
+        return Vector2.toVector3( Direction.toVector2(dir) )
+    },
 
-    export function turnCW(dir: Direction, amount: number = 1): Direction
+    turnCW: (dir: Direction, amount: number = 1): Direction =>
     {
         return ( (dir + amount) % 4 + 4 ) % 4
-    }
+    },
 
-    export function turnCCW(dir: Direction, amount: number = 1): Direction
+    turnCCW: (dir: Direction, amount: number = 1): Direction =>
     {
-        return turnCW(dir, -amount)
+        return Direction.turnCW(dir, -amount)
+    }
+}
+
+
+export interface Vector5
+{
+    y: number
+    'x+': number
+    'x-': number
+    'z+': number
+    'z-': number
+}
+
+export namespace Vector5
+{
+    export function componentInDirection(vec: Vector5, dir: Direction): number
+    {
+        switch(dir)
+        {
+            case Direction.NW:
+                return vec['x-']
+
+            case Direction.NE:
+                return vec['z-']
+
+            case Direction.SE:
+                return vec['x+']
+
+            case Direction.SW:
+                return vec['z+']
+        }
     }
 }
