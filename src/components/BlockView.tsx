@@ -77,10 +77,22 @@ extends React.Component<P, S>
 			toolbox: document.getElementById('config-toolbox')!
 		}) as Workspace
 
-		this.workspace.getInjectionDiv().classList.add('expand')
+		const injectionDiv = this.workspace.getInjectionDiv()
+		injectionDiv.classList.add('expand')
 
 		const workspaceConfig = document.getElementById('config-workspace')!
 		ScratchBlocks.Xml.domToWorkspace(workspaceConfig, this.workspace)
+
+
+		// Set the workspace's width for the first time
+
+		setTimeout( () =>
+			{
+				const boundingRect = injectionDiv.getBoundingClientRect()
+				const blocklySvg = injectionDiv.getElementsByClassName('blocklySvg')[0]
+				blocklySvg.setAttribute('width', boundingRect.width + 'px')
+			},
+		0)
 
 
 		// Set up debugging hooks

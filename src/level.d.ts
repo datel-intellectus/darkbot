@@ -1,5 +1,5 @@
 import { Vector3, Direction } from "./spatial"
-import { Tiles } from "./tiles"
+import { Tiles } from "./render/tiles"
 
 export default interface Level
 {

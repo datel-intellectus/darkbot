@@ -3,6 +3,7 @@ module.exports = {
 
     "rules": {
         "no-cond-assign": "off",
+        "no-redeclare": "off",
         "semi": ["warn", "never"]
     }
 }

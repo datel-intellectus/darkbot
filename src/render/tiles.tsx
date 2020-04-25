@@ -1,6 +1,6 @@
 import React from "react"
-import { Vector3 } from "./spatial"
-import { ViewElement } from "./components/ViewElement"
+import { Vector3 } from "../spatial"
+import { ViewElement } from "./ViewElement"
 
 
 export namespace Tiles
