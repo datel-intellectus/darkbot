@@ -113,7 +113,7 @@ export class CheckRunner
 
     waterColumnTop = (col: WaterColumn): number =>
     {
-        return col.top ?? 0
+        return col.top ?? this.waterColumnBottom(col)
     }
 
     inWater = (pos: Vector3): boolean =>

@@ -54,12 +54,12 @@ export class VirtualMachine extends EventTarget<VirtualMachineEvents>
         super()
 
         for (let y = 0; y < level.tiles.length;       y++)
-        for (let x = 0; x < level.tiles[y].length;    x++)
-        for (let z = 0; z < level.tiles[y][x].length; z++)
+        for (let z = 0; z < level.tiles[y].length;    z++)
+        for (let x = 0; x < level.tiles[y][z].length; x++)
         {
             makeMultidimArray(this.tiles, x, z)
 
-            const el = level.tiles[y][x][z]
+            const el = level.tiles[y][z][x]
             if (!el) continue
 
             this.tiles[x][z][y] = {

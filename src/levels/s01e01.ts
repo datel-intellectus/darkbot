@@ -16,16 +16,24 @@ const level: Level =
 
 	tiles: [
 		[
-			[ undefined, undefined,       undefined ],
-			[ undefined, {type: "Floor"}, {type: "Floor"} ],
-			[ undefined, {type: "Floor"}, {type: "Floor"} ],
+			[ undefined, undefined,       undefined,       undefined ],
+			[ undefined, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ undefined, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
 		],
 		[
-			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
-			[ {type: "Floor"}, undefined,       undefined ],
-			[ {type: "Floor"}, undefined,       undefined ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, undefined,       undefined,       undefined ],
+			[ {type: "Floor"}, undefined,       undefined,       undefined ],
 		]
-	]
+	],
+
+	water: {
+		height: [
+			[ 0, 0, 0 ],
+			[ 0, 1, 1 ],
+			[ 0, 0, 0 ]
+		]
+	}
 }
 
 export default level

@@ -30,7 +30,7 @@ extends React.Props<any>
 export class Robots<P extends RobotProps>
 extends React.Component<P>
 {
-    vm: VirtualMachine|undefined = undefined
+    vm: VirtualMachine|undefined
 
     render()
     {

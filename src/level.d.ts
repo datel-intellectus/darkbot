@@ -10,8 +10,10 @@ export default interface Level
 	redBlocks: number
 
 	player: Player
-	/** 3-dim array in the format `[y][x][z]` */
+	/** 3-dim array in the format `[y][z][x]` */
 	tiles: (Tile|undefined)[][][]
+
+	water?: Water
 }
 
 interface Player
@@ -23,4 +25,10 @@ interface Player
 interface Tile
 {
 	type: keyof typeof Tiles
+}
+
+interface Water
+{
+	/** 2-dim array in the format `[z][x]` */
+	height: number[][]
 }

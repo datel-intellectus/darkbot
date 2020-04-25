@@ -1,3 +1,4 @@
+import { EventTarget } from "@meta-utils/events"
 import { VirtualMachine } from "."
 import { Direction, Vector3 } from "../spatial"
 import { makeMultidimArray } from "../utils/multidim"
@@ -49,7 +50,13 @@ interface Neighbour
     ref: WaterColumn
 }
 
+export interface WaterRunnerEvents
+{
+    tick: {}
+}
+
 export class WaterRunner
+extends EventTarget<WaterRunnerEvents>
 {
     /**
      * The multidimensional array of columns possible to fill
@@ -57,10 +64,20 @@ export class WaterRunner
      */
     cols: WaterColumn[][][] = []
 
+    tick = 500
+
     constructor(public vm: VirtualMachine)
     {
+        super()
         this.generateColumns()
         this.connectNeighbours()
+        this.loadFromLevel()
+    }
+
+    private step = () =>
+    {
+        setTimeout(this.step, this.tick)
+        this.updateNeighbourWeights()
     }
 
     allColumns = (() =>
@@ -156,6 +173,26 @@ export class WaterRunner
                 if (commonTiles > 0)
                     col.neighbours.push({ direction, weight: 0, ref: col_ })
             }
+        }
+    }
+
+    private loadFromLevel = () =>
+    {
+        const vm = this.vm
+        const check = vm.check
+        const tiles = vm.level.water?.height
+        if (!tiles) return
+
+        for (let z = 0; z < tiles.length;    z++)
+        for (let x = 0; x < tiles[z].length; x++)
+        {
+            const height = tiles[z][x]
+            if (height === 0) continue
+
+            const cols = this.cols[x][z]
+            const col = cols[cols.length - 1]
+
+            col.top = check.waterColumnBottom(col) + height
         }
     }
 
