@@ -3,6 +3,8 @@ import { Vector3, Direction } from "../spatial"
 import { makeMultidimArray } from "../utils/multidim"
 import { WaterColumn } from "./water"
 
+type Neighbour = WaterColumn['neighbours'][0]
+
 export class CheckRunner
 {
     constructor(public vm: VirtualMachine) { }
@@ -99,11 +101,18 @@ export class CheckRunner
         )
     }
 
+    /**
+     * Can descend or jump?
+     */
     canStepUpDown = (): boolean =>
     {
         return this.canDescend() || this.canJump()
     }
 
+    /**
+     * The bottom of the water on this column. If it's empty,
+     * returns the floor, or `-Infinity` if the column has no floor.
+     */
     waterColumnBottom = (col: WaterColumn): number =>
     {
         if (col.bottom !== undefined) return col.bottom
@@ -111,11 +120,17 @@ export class CheckRunner
         return -Infinity
     }
 
+    /**
+     * The top of the water column, or the floor if it's empty.
+     */
     waterColumnTop = (col: WaterColumn): number =>
     {
         return col.top ?? this.waterColumnBottom(col)
     }
 
+    /**
+     * Is this position in water? (As opposed to in air or in a ground tile.)
+     */
     inWater = (pos: Vector3): boolean =>
     {
         const {x, y, z} = pos
@@ -135,8 +150,32 @@ export class CheckRunner
         return false
     }
 
+    /**
+     * Is the water in this column touching the ground?
+     */
     isWaterOnGround = (col: WaterColumn): boolean =>
     {
         return this.waterColumnBottom(col) === col.floor
+    }
+
+    /**
+     *
+     */
+    hasAnyWater = (col: WaterColumn): boolean =>
+    {
+        return this.waterColumnTop(col) !== this.waterColumnBottom(col)
+    }
+
+    /**
+     *
+     */
+    thisColumnAsNeighbour = (col: WaterColumn, neighbour: Neighbour): Neighbour | null =>
+    {
+        for (const nn of neighbour.ref.neighbours)
+        {
+            if (nn.ref === col) return nn
+        }
+
+        return null
     }
 }

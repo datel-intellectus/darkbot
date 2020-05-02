@@ -2,6 +2,7 @@ import { EventTarget } from "@meta-utils/events"
 import { VirtualMachine } from "."
 import { Direction, Vector3, Vector5 } from "../spatial"
 import { makeMultidimArray } from "../utils/multidim"
+const { min, max } = Math
 
 
 export interface WaterColumn
@@ -24,8 +25,8 @@ export interface WaterColumn
     /**
      * The y coordinate of the top of the water column,
      * undefined if there's no water in this column.
-     * If the number is higher than `ceil`, the water is
-     * pressurized inside the space.
+     * ~If the number is higher than `ceil`, the water is
+     * pressurized inside the space.~
      */
     top?: number
 
@@ -36,12 +37,13 @@ export interface WaterColumn
     bottom?: number
 
     /**
-     *
+     * The pressure of this column. On a free tile it's equal
+     * to `top`, but if `top == ceil`, it might be higher.
      */
     pressure: number
 
     /**
-     * Neighbourng water columns, direction to them and
+     * Neighbouring water columns, direction to them and
      * a weight that quantifies how easily water flows there.
      */
     neighbours: Neighbour[]
@@ -71,6 +73,8 @@ interface Neighbour
 export interface WaterRunnerEvents
 {
     tick: {}
+    beforeIntegration: {}
+    afterIntegration: {}
 }
 
 export class WaterRunner
@@ -106,10 +110,14 @@ extends EventTarget<WaterRunnerEvents>
 
     private step = () =>
     {
-        //setTimeout(this.step, this.tick)
+        setTimeout(this.step, this.tick)
+
+        this.dispatchEvent('beforeIntegration', {})
         this.integrate()
+        this.dispatchEvent('afterIntegration', {})
+
         this.updatePressure()
-        //this.updateNeighbourWeights()
+        this.computeWeights()
         this.updateVelocities()
         this.dispatchEvent('tick', {})
     }
@@ -146,16 +154,16 @@ extends EventTarget<WaterRunnerEvents>
         {
             if (tile === undefined) continue
             const {x, z} = tile.worldPosition
-            xMax = Math.max(x, xMax)
-            zMax = Math.max(z, zMax)
+            xMax = max(x, xMax)
+            zMax = max(z, zMax)
         }
 
         xMax += 1
         zMax += 1
 
 
-        for (let x = -1; x < xMax; x++)
-        for (let z = -1; z < zMax; z++)
+        for (let x = -1; x <= xMax; x++)
+        for (let z = -1; z <= zMax; z++)
         {
             makeMultidimArray(tiles, x, z)
             makeMultidimArray(this.cols, x, z)
@@ -236,16 +244,15 @@ extends EventTarget<WaterRunnerEvents>
     private updatePressure = () =>
     {
         const check = this.vm.check
-        const { max } = Math
 
         for (const col of this.allColumns())
         {
-            const ceil = col.ceil ?? check.waterColumnBottom(col)
             const top = check.waterColumnTop(col)
+            const ceil = col.ceil
 
             if (top !== ceil)
             {
-                col.pressure = ceil
+                col.pressure = top
             }
             else
             {
@@ -259,17 +266,33 @@ extends EventTarget<WaterRunnerEvents>
         }
     }
 
-    private updateNeighbourWeights = () =>
+    private computeWeights = () =>
     {
         const check = this.vm.check
 
         for (const col of this.allColumns())
         for (const neighbour of col.neighbours)
         {
-            const col_ = neighbour.ref
-            const bottom = Math.max( check.waterColumnBottom(col), check.waterColumnBottom(col_) )
-            const top    = Math.min( check.waterColumnTop(col),    check.waterColumnTop(col_)    )
-            const weight = Math.max( 0, top - bottom )
+            const { ref } = neighbour
+
+            const thisBottom = check.waterColumnBottom(col)
+            const thisPressure = col.pressure
+            const thatPressure = ref.pressure
+
+            const thatEffectivePressure = max(thatPressure, thisBottom)
+
+            const weight = thatEffectivePressure - thisPressure
+
+            neighbour.weight = 0
+
+            if (Number.isNaN(weight))
+                continue
+
+            if (weight > 0 && !check.hasAnyWater(ref))
+                continue
+
+            if (weight < 0 && !check.hasAnyWater(col))
+                continue
 
             neighbour.weight = weight
         }
@@ -281,6 +304,9 @@ extends EventTarget<WaterRunnerEvents>
 
         for (const col of this.allColumns())
         {
+            const hasWater = check.hasAnyWater(col)
+            const onGround = check.isWaterOnGround(col)
+
             // Apply damping
             for (const dir of Direction)
             {
@@ -288,27 +314,28 @@ extends EventTarget<WaterRunnerEvents>
                 col.velocity[k] *= 1 - this.damping
             }
 
-            // Apply gravity
-            if (!check.isWaterOnGround(col))
+            // Apply gravitational pull
+            if (hasWater && !onGround)
             {
-                // Gravitational pull
                 col.velocity.y -= this.gravity
             }
-            else
+
+            // Apply gravitational spread
+            for (const neighbour of col.neighbours)
             {
-                // Gravitational spread
-                for (const neighbour of col.neighbours)
-                {
-                    const { direction, ref } = neighbour
-                    const k = Vector5.keyInDirection(direction)
+                const { direction, weight, ref } = neighbour
+                const k = Vector5.keyInDirection(direction)
+                const refOnGround = check.isWaterOnGround(ref)
 
-                    const thisTop = check.waterColumnTop(col)
-                    const thatTop = check.waterColumnTop(ref)
-                    const diff = thisTop - thatTop
+                const v = weight * this.gravity * this.fluidity / 4
 
-                    col.velocity[k] += diff * this.gravity * this.fluidity / 4
-                }
+                if (v > 0 && onGround)
+                    col.velocity[k] += v
+
+                if (v < 0 && refOnGround)
+                    col.velocity[k] += v
             }
+
 
             // Redirect invalid velocities
             for (const dir of Direction)
@@ -331,7 +358,6 @@ extends EventTarget<WaterRunnerEvents>
         return () =>
         {
             const check = this.vm.check
-            const { max } = Math
 
             // Calculate updated velocities
             for (const col of this.allColumns())
@@ -347,6 +373,8 @@ extends EventTarget<WaterRunnerEvents>
 
                 for (const k of Vector5.keys())
                     flux += col.velocity[k]
+
+                if (flux === 0) continue
 
                 if (flux < 0)
                 {
@@ -366,13 +394,26 @@ extends EventTarget<WaterRunnerEvents>
                     newTop += flux
                     col.top = newTop === floor ? undefined : newTop
                 }
-                else
+                else // flux > 0
                 {
                     const floor = col.floor ?? -Infinity
-                    const bottom = check.waterColumnBottom(col)
-                    const newBottom = max( floor, bottom - flux )
+                    let bottom: number = check.waterColumnBottom(col)
 
-                    console.log(floor, bottom, newBottom)
+                    // if there's no water, move the bottom up from the floor
+                    if (!check.hasAnyWater(col))
+                    {
+                        let neighbourBottom = Infinity
+
+                        for (const { ref } of col.neighbours)
+                        if (check.hasAnyWater(ref))
+                        {
+                            neighbourBottom = min( neighbourBottom, check.waterColumnBottom(ref) )
+                        }
+
+                        if (neighbourBottom !== Infinity) bottom = max( neighbourBottom, floor )
+                    }
+
+                    const newBottom = max( floor, bottom - flux )
 
                     col.bottom = newBottom === floor ? undefined : newBottom
                     flux -= bottom - newBottom
@@ -380,14 +421,15 @@ extends EventTarget<WaterRunnerEvents>
                     // in case of floor == -Infinity
                     if (Number.isNaN(flux)) flux = 0
 
-                    const top = col.top ?? 0
+                    const top = col.top ?? floor
                     const newTop = top + flux
 
-                    col.top = newTop === 0 ? undefined : newTop
+                    col.top = newTop === floor ? undefined : newTop
                 }
             }
 
             // Enforce conservation of water
+            // eslint-disable-next-line
             for (const col of this.allColumns())
             {
                 // TODO

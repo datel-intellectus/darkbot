@@ -28,7 +28,7 @@ extends React.Component<P>
         const water = vm.water
         const tiles: any[] = []
 
-        const floor = (n: number) => Math.floor(n * 16) / 16
+        // const floor = (n: number) => Math.floor(n * 16) / 16
         const ceil  = (n: number) => Math.ceil(n * 16) / 16
 
         for (const col of water.allColumns())
