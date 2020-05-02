@@ -49,6 +49,9 @@ export class VirtualMachine extends EventTarget<VirtualMachineEvents>
     readonly blocks: BlockRunner
     readonly water: WaterRunner
 
+    gravity: number = 1
+    tick: number = 1000
+
     constructor(public workspace: Workspace, public level: Level)
     {
         super()

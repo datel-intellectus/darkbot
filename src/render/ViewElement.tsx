@@ -41,6 +41,6 @@ function getTransformation(dimensions: Vector2, offset: Vector2, world: Vector3)
 	return {
 		left: vec.x + 'px',
         top: vec.y + 'px',
-        zIndex: z
+        zIndex: Math.floor(z)
 	}
 }

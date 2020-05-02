@@ -134,4 +134,9 @@ export class CheckRunner
 
         return false
     }
+
+    isWaterOnGround = (col: WaterColumn): boolean =>
+    {
+        return this.waterColumnBottom(col) === col.floor
+    }
 }

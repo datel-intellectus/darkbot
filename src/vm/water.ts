@@ -1,6 +1,6 @@
 import { EventTarget } from "@meta-utils/events"
 import { VirtualMachine } from "."
-import { Direction, Vector3 } from "../spatial"
+import { Direction, Vector3, Vector5 } from "../spatial"
 import { makeMultidimArray } from "../utils/multidim"
 
 
@@ -24,6 +24,8 @@ export interface WaterColumn
     /**
      * The y coordinate of the top of the water column,
      * undefined if there's no water in this column.
+     * If the number is higher than `ceil`, the water is
+     * pressurized inside the space.
      */
     top?: number
 
@@ -34,11 +36,27 @@ export interface WaterColumn
     bottom?: number
 
     /**
+     *
+     */
+    pressure: number
+
+    /**
      * Neighbourng water columns, direction to them and
      * a weight that quantifies how easily water flows there.
      */
     neighbours: Neighbour[]
+
+    /**
+     * The rate of flow of the water in various directions
+     */
+    velocity: Vector5
 }
+
+const defaultColumn = (): WaterColumn => ({
+    x: 0, z: 0, floor: 0, ceil: 0,
+    pressure: 0, neighbours: [],
+    velocity: Vector5.zero()
+})
 
 interface Neighbour
 {
@@ -64,7 +82,18 @@ extends EventTarget<WaterRunnerEvents>
      */
     cols: WaterColumn[][][] = []
 
-    tick = 500
+    tickRate = .5
+    damping = .5
+    fluidity = .25
+
+    get tick(): number {
+        return this.vm.tick * this.tickRate
+    }
+
+    get gravity() : number {
+        return this.vm.gravity * this.tickRate
+    }
+
 
     constructor(public vm: VirtualMachine)
     {
@@ -72,12 +101,17 @@ extends EventTarget<WaterRunnerEvents>
         this.generateColumns()
         this.connectNeighbours()
         this.loadFromLevel()
+        this.step()
     }
 
     private step = () =>
     {
-        setTimeout(this.step, this.tick)
-        this.updateNeighbourWeights()
+        //setTimeout(this.step, this.tick)
+        this.integrate()
+        this.updatePressure()
+        //this.updateNeighbourWeights()
+        this.updateVelocities()
+        this.dispatchEvent('tick', {})
     }
 
     allColumns = (() =>
@@ -135,7 +169,8 @@ extends EventTarget<WaterRunnerEvents>
                 {
                     ceil = y
                     this.cols[x][z].push({
-                        x, z, floor, ceil, neighbours: []
+                        ...defaultColumn(),
+                        x, z, floor, ceil
                     })
                 }
 
@@ -147,7 +182,8 @@ extends EventTarget<WaterRunnerEvents>
             }
 
             this.cols[x][z].push({
-                x, z, floor, ceil, neighbours: []
+                ...defaultColumn(),
+                x, z, floor, ceil
             })
         }
     }
@@ -193,6 +229,33 @@ extends EventTarget<WaterRunnerEvents>
             const col = cols[cols.length - 1]
 
             col.top = check.waterColumnBottom(col) + height
+            col.pressure = col.top
+        }
+    }
+
+    private updatePressure = () =>
+    {
+        const check = this.vm.check
+        const { max } = Math
+
+        for (const col of this.allColumns())
+        {
+            const ceil = col.ceil ?? check.waterColumnBottom(col)
+            const top = check.waterColumnTop(col)
+
+            if (top !== ceil)
+            {
+                col.pressure = ceil
+            }
+            else
+            {
+                let pressure = -Infinity
+
+                for (const { ref } of col.neighbours)
+                    pressure = max(pressure, ref.pressure)
+
+                col.pressure = pressure
+            }
         }
     }
 
@@ -211,4 +274,130 @@ extends EventTarget<WaterRunnerEvents>
             neighbour.weight = weight
         }
     }
+
+    private updateVelocities = () =>
+    {
+        const check = this.vm.check
+
+        for (const col of this.allColumns())
+        {
+            // Apply damping
+            for (const dir of Direction)
+            {
+                const k = Vector5.keyInDirection(dir)
+                col.velocity[k] *= 1 - this.damping
+            }
+
+            // Apply gravity
+            if (!check.isWaterOnGround(col))
+            {
+                // Gravitational pull
+                col.velocity.y -= this.gravity
+            }
+            else
+            {
+                // Gravitational spread
+                for (const neighbour of col.neighbours)
+                {
+                    const { direction, ref } = neighbour
+                    const k = Vector5.keyInDirection(direction)
+
+                    const thisTop = check.waterColumnTop(col)
+                    const thatTop = check.waterColumnTop(ref)
+                    const diff = thisTop - thatTop
+
+                    col.velocity[k] += diff * this.gravity * this.fluidity / 4
+                }
+            }
+
+            // Redirect invalid velocities
+            for (const dir of Direction)
+            {
+                const k = Vector5.keyInDirection(dir)
+
+                if (col.neighbours.every( ({ direction }) => direction !== dir ))
+                {
+                    col.velocity.y += col.velocity[k]
+                    col.velocity[k] = 0
+                }
+            }
+        }
+    }
+
+    private integrate = (() =>
+    {
+        const newVelocities = new WeakMap<WaterColumn, Vector5>()
+
+        return () =>
+        {
+            const check = this.vm.check
+            const { max } = Math
+
+            // Calculate updated velocities
+            for (const col of this.allColumns())
+            {
+                // TODO
+                newVelocities.set(col, col.velocity)
+            }
+
+            // Update the height of water on each tile
+            for (const col of this.allColumns())
+            {
+                let flux = 0
+
+                for (const k of Vector5.keys())
+                    flux += col.velocity[k]
+
+                if (flux < 0)
+                {
+                    const floor = col.floor
+                    const bottom = check.waterColumnBottom(col)
+                    const top = col.top ?? 0
+                    let newTop = max( bottom, top + flux )
+
+                    flux += top - newTop
+
+                    if (col.bottom !== undefined && floor !== undefined && newTop === bottom)
+                    {
+                        newTop = floor
+                        col.bottom = undefined
+                    }
+
+                    newTop += flux
+                    col.top = newTop === floor ? undefined : newTop
+                }
+                else
+                {
+                    const floor = col.floor ?? -Infinity
+                    const bottom = check.waterColumnBottom(col)
+                    const newBottom = max( floor, bottom - flux )
+
+                    console.log(floor, bottom, newBottom)
+
+                    col.bottom = newBottom === floor ? undefined : newBottom
+                    flux -= bottom - newBottom
+
+                    // in case of floor == -Infinity
+                    if (Number.isNaN(flux)) flux = 0
+
+                    const top = col.top ?? 0
+                    const newTop = top + flux
+
+                    col.top = newTop === 0 ? undefined : newTop
+                }
+            }
+
+            // Enforce conservation of water
+            for (const col of this.allColumns())
+            {
+                // TODO
+            }
+
+            // Use the updated velocities
+            for (const col of this.allColumns())
+            {
+                col.velocity = newVelocities.get(col)!
+            }
+        }
+    })()
 }

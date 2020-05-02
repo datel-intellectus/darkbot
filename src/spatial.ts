@@ -27,6 +27,11 @@ export namespace Vector2
     {
         return { x: u.x + v.x, y: u.y + v.y }
     }
+
+    export function zero(): Vector2
+    {
+        return { x: 0, y: 0 }
+    }
 }
 
 export namespace Vector3
@@ -50,23 +55,26 @@ export namespace Vector3
     {
         return { x: u.x + v.x, y: u.y + v.y, z: u.z + v.z }
     }
+
+    export function zero()
+    {
+        return { x: 0, y: 0, z: 0 }
+    }
 }
 
 
-export enum Direction_
+export enum DirectionEnum
 {
     NW, NE, SE, SW
 }
 
-export const { NW, NE, SE, SW } = Direction_
-
-export type Direction = Direction_
+export type Direction = DirectionEnum
 export const Direction =
 {
-    NW: Direction_.NW as const,
-    NE: Direction_.NE as const,
-    SE: Direction_.SE as const,
-    SW: Direction_.SW as const,
+    NW: DirectionEnum.NW as const,
+    NE: DirectionEnum.NE as const,
+    SE: DirectionEnum.SE as const,
+    SW: DirectionEnum.SW as const,
 
     [Symbol.iterator]: function* ()
     {
@@ -138,5 +146,37 @@ export namespace Vector5
             case Direction.SW:
                 return vec['z+']
         }
+    }
+
+    export function keyInDirection(dir: Direction)
+    {
+        switch(dir)
+        {
+            case Direction.NW:
+                return 'x-'
+
+            case Direction.NE:
+                return 'z-'
+
+            case Direction.SE:
+                return 'x+'
+
+            case Direction.SW:
+                return 'z+'
+        }
+    }
+
+    export function zero()
+    {
+        return { y: 0, 'x+': 0, 'x-': 0, 'z+': 0, 'z-': 0 }
+    }
+
+    export function* keys(): Generator<keyof Vector5>
+    {
+        yield 'y'
+        yield 'x+'
+        yield 'x-'
+        yield 'z+'
+        yield 'z-'
     }
 }
