@@ -4,6 +4,13 @@ import { Direction, Vector3, Vector5 } from "../spatial"
 import { makeMultidimArray } from "../utils/multidim"
 const { min, max } = Math
 
+/*
+Tile-based water simulation
+-------
+TODO disallow overfull and underfull columns
+TODO implement momentum transfer between tiles
+TODO fix interactions with floor-less columns
+*/
 
 export interface WaterColumn
 {
@@ -89,6 +96,7 @@ extends EventTarget<WaterRunnerEvents>
     tickRate = .25
     damping = .5
     fluidity = .25
+    bounciness = 1
 
     get tick(): number {
         return this.vm.tick * this.tickRate
@@ -99,7 +107,7 @@ extends EventTarget<WaterRunnerEvents>
     }
 
 
-    constructor(public vm: VirtualMachine)
+    constructor(public vm: VirtualMachine, private readonly extendBox: boolean = false)
     {
         super()
         this.generateColumns()
@@ -129,8 +137,10 @@ extends EventTarget<WaterRunnerEvents>
         {
             const cols = self.cols
 
-            for (let x = -1; x < cols.length;    x++)
-            for (let z = -1; z < cols[x].length; z++)
+            const minIndex = self.extendBox ? -1 : 0
+
+            for (let x = minIndex; x < cols.length;    x++)
+            for (let z = minIndex; z < cols[x].length; z++)
             for (const col of cols[x][z])
             {
                 yield col
@@ -147,6 +157,8 @@ extends EventTarget<WaterRunnerEvents>
         // extend tiles, so that we have at least one
         // water column past the edge of the world
 
+        let xMin = 0
+        let zMin = 0
         let xMax = 0
         let zMax = 0
 
@@ -158,12 +170,17 @@ extends EventTarget<WaterRunnerEvents>
             zMax = max(z, zMax)
         }
 
-        xMax += 1
-        zMax += 1
+        if (this.extendBox)
+        {
+            xMin -= 1
+            zMin -= 1
+            xMax += 1
+            zMax += 1
+        }
 
 
-        for (let x = -1; x <= xMax; x++)
-        for (let z = -1; z <= zMax; z++)
+        for (let x = xMin; x <= xMax; x++)
+        for (let z = zMin; z <= zMax; z++)
         {
             makeMultidimArray(tiles, x, z)
             makeMultidimArray(this.cols, x, z)
@@ -351,9 +368,9 @@ extends EventTarget<WaterRunnerEvents>
             {
                 const k = Vector5.keyInDirection(dir)
 
-                if (col.neighbours.every( ({ direction }) => direction !== dir ))
+                if (col.neighbours.every( ({ direction, weight }) => direction !== dir || weight === 0 ))
                 {
-                    col.velocity.y += col.velocity[k]
+                    col.velocity.y += col.velocity[k] * this.bounciness
                     col.velocity[k] = 0
                 }
             }
@@ -452,7 +469,7 @@ extends EventTarget<WaterRunnerEvents>
         }
     })()
 
-    private computeTotalVolume = (): number =>
+    computeTotalVolume = (): number =>
     {
         const check = this.vm.check
 

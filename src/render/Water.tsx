@@ -42,12 +42,23 @@ extends React.Component<P>
             bottom = clamp(bottom, -10, 10)
             top = clamp(top, -10, 10)
 
+            let opacity = 1
+
+            if (top - bottom < 1/16)
+                opacity = 16 * (top - bottom)
+
+
             for (let y = bottom; y < top; y += 1/16)
             {
                 if (!check.inWater({ x:x+1, y, z }))
                 {
                     tiles.push(
-                        <ViewElement worldPosition={{ x, y, z }} screenOffset={{ x: -64, y: -32 }} key={`${keyFor(col)}_${y}_x`}>
+                        <ViewElement
+                            worldPosition={{ x, y, z }}
+                            screenOffset={{ x: -64, y: -32 }}
+                            opacity={opacity}
+                            key={`${keyFor(col)}_${y}_x`}
+                        >
                             <img src="media/water_side_x.svg" alt="" />
                         </ViewElement>
                     )
@@ -56,18 +67,17 @@ extends React.Component<P>
                 if (!check.inWater({ x, y, z:z+1 }))
                 {
                     tiles.push(
-                        <ViewElement worldPosition={{ x, y, z }} screenOffset={{ x: -64, y: -32 }} key={`${keyFor(col)}_${y}_z`}>
+                        <ViewElement
+                            worldPosition={{ x, y, z }}
+                            screenOffset={{ x: -64, y: -32 }}
+                            opacity={opacity}
+                            key={`${keyFor(col)}_${y}_z`}
+                        >
                             <img src="media/water_side_z.svg" alt="" />
                         </ViewElement>
                     )
                 }
             }
-
-            let opacity = 1
-
-            if (top - bottom < 1/16)
-                opacity = 16 * (top - bottom)
-
 
             tiles.push(
                 <ViewElement
