@@ -6,6 +6,7 @@ import { WorldView } from "./WorldView"
 import { Robots } from "./Robots"
 import { ViewElement } from "./ViewElement"
 import { Water } from "./Water"
+import { Circuit } from "./Circuit"
 
 // export namespace Render
 // {
@@ -46,8 +47,10 @@ extends React.Component<RenderProps, RenderState>
         return (
             <WorldView id="worldview">
                 {tiles}
-                <Robots vm={vm} />
-                <Water  vm={vm} />
+                <Robots  vm={vm} />
+                <Water   vm={vm} />
+                <Circuit vm={vm} />
+
                 <ViewElement worldPosition={{x:0,y:0,z:0}} screenOffset={{x:-200,y:-200}}>
                     {
                         this.state.reset

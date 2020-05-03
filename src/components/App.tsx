@@ -9,7 +9,7 @@ import { Render } from '../render'
 export class App<P, S> extends React.Component<P, S>
 {
 	vm: VirtualMachine|undefined = undefined
-	level = levels[0][0]
+	level = levels[0][2]
 
 	getWorkspace = (workspace: Workspace) =>
 	{

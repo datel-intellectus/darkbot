@@ -68,7 +68,7 @@ const defaultColumn = (): WaterColumn => ({
     velocity: Vector5.zero()
 })
 
-interface Neighbour
+export interface Neighbour
 {
     /**
      * The number of free tiles touching the neighbouring water column.
@@ -130,19 +130,20 @@ extends EventTarget<WaterRunnerEvents>
         this.updateVelocities()
         this.dispatchEvent('tick', {})
 
-        let str = ""
-        for (let x = 0; x < this.cols.length; x++)
-        {
-            str += "\n"
+        // diagnostics regarding issue #1:
+        // let str = ""
+        // for (let x = 0; x < this.cols.length; x++)
+        // {
+        //     str += "\n"
 
-            for (let z = 0; z < this.cols[x].length;    z++)
-            for (let i = 0; i < this.cols[x][z].length; i++)
-            {
-                const col = this.cols[x][z][i]
-                str += col.pressure.toFixed(1).padStart(5) + ', '
-            }
-        }
-        console.log(str)
+        //     for (let z = 0; z < this.cols[x].length;    z++)
+        //     for (let i = 0; i < this.cols[x][z].length; i++)
+        //     {
+        //         const col = this.cols[x][z][i]
+        //         str += col.pressure.toFixed(1).padStart(5) + ', '
+        //     }
+        // }
+        // console.log(str)
     }
 
     allColumns = (() =>

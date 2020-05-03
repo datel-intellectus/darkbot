@@ -7,6 +7,7 @@ import { Tiles, Tile_Props } from "../render/tiles"
 import { BlockRunner } from "./blocks"
 import { WaterRunner } from "./water"
 import { CheckRunner } from "./check"
+import { CircuitRunner } from "./circuits"
 
 
 // Events
@@ -48,6 +49,7 @@ export class VirtualMachine extends EventTarget<VirtualMachineEvents>
     readonly check: CheckRunner
     readonly blocks: BlockRunner
     readonly water: WaterRunner
+    readonly circuits: CircuitRunner
 
     gravity: number = 1
     tick: number = 1000
@@ -76,6 +78,7 @@ export class VirtualMachine extends EventTarget<VirtualMachineEvents>
         this.check = new CheckRunner(this)
         this.blocks = new BlockRunner(this)
         this.water = new WaterRunner(this)
+        this.circuits = new CircuitRunner(this)
 
         ;(window as any).virtualMachine = this
     }

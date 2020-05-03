@@ -5,8 +5,6 @@ import { CheckRunner } from "./check"
 
 export class BlockRunner
 {
-    vm: VirtualMachine
-
     get check(): CheckRunner
     {
         return this.vm.check
@@ -23,10 +21,8 @@ export class BlockRunner
     private currentBlock: Block | undefined
     private currentTimeout: ReturnType<typeof setTimeout> | undefined
 
-    constructor(vm: VirtualMachine)
+    constructor(public vm: VirtualMachine)
     {
-        this.vm = vm
-
         this.blockMain = vm.workspace.blockDB_.blockMain as Block
         this.blockP1 = vm.workspace.blockDB_.blockP1 as Block
         this.blockP2 = vm.workspace.blockDB_.blockP2 as Block

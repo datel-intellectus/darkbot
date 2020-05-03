@@ -32,6 +32,11 @@ export namespace Vector2
     {
         return { x: 0, y: 0 }
     }
+
+    export function stepInDirection(origin: Vector2, direction: Direction)
+    {
+        return Vector2.add( origin, Direction.toVector2(direction) )
+    }
 }
 
 export namespace Vector3
@@ -59,6 +64,11 @@ export namespace Vector3
     export function zero()
     {
         return { x: 0, y: 0, z: 0 }
+    }
+
+    export function stepInDirection(origin: Vector3, direction: Direction)
+    {
+        return Vector3.add( origin, Direction.toVector3(direction) )
     }
 }
 
