@@ -21,11 +21,37 @@ const level: Level =
 			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
 			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
 			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+		],
+		[
+			[ undefined, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ undefined, {type: "Floor"}, undefined,       undefined,       {type: "Floor"} ],
+			[ undefined, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ undefined, undefined,       undefined,       undefined,       undefined,      ],
+			[ undefined, undefined,       undefined,       undefined,       undefined,      ],
+			[ undefined, undefined,       undefined,       undefined,       undefined,      ],
+			[ undefined, undefined,       undefined,       undefined,       undefined,      ],
+			[ undefined, undefined,       undefined,       undefined,       undefined,      ],
 		]
 	],
 
+	water: {
+		height: [
+			[0, 0, 0, 0, 0],
+			[0, 0, 0, 2, 0],
+			[0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0],
+		]
+	},
+
 	circuit: {
 		scheme:
+			'     ' + '\n' +
+			'     ' + '\n' +
+			'     ' + '\n' +
 			'     ' + '\n' +
 			' ┌──┐' + '\n' +
 			'┌┿──┘' + '\n' +

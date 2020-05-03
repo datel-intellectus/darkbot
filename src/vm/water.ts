@@ -94,8 +94,8 @@ extends EventTarget<WaterRunnerEvents>
      */
     cols: WaterColumn[][][] = []
 
-    tickRate = .25
-    damping = .5
+    tickRate = .02
+    damping = .8
     fluidity = .25
     bounciness = 1
 
