@@ -63,8 +63,19 @@ extends React.Component<P>
                 }
             }
 
+            let opacity = 1
+
+            if (top - bottom < 1/16)
+                opacity = 16 * (top - bottom)
+
+
             tiles.push(
-                <ViewElement worldPosition={{ x, y: ceil(top), z }} screenOffset={{ x: -64, y: -32 }} key={`${keyFor(col)}_cap`}>
+                <ViewElement
+                    worldPosition={{ x, y: ceil(top), z }}
+                    screenOffset={{ x: -64, y: -32 }}
+                    opacity={opacity}
+                    key={`${keyFor(col)}_cap`}
+                >
                     <img src="media/water_top.svg" alt="" />
                 </ViewElement>
             )
@@ -81,7 +92,6 @@ extends React.Component<P>
 
     onTick = () =>
     {
-        console.log('aaa')
         this.forceUpdate()
     }
 }

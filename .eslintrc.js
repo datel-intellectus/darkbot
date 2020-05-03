@@ -4,6 +4,7 @@ module.exports = {
     "rules": {
         "no-cond-assign": "off",
         "no-redeclare": "off",
-        "semi": ["warn", "never"]
+        "semi": ["warn", "never"],
+        "guard-for-in": "error"
     }
 }

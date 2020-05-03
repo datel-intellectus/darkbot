@@ -86,7 +86,7 @@ extends EventTarget<WaterRunnerEvents>
      */
     cols: WaterColumn[][][] = []
 
-    tickRate = .5
+    tickRate = .25
     damping = .5
     fluidity = .25
 
@@ -266,6 +266,22 @@ extends EventTarget<WaterRunnerEvents>
         }
     }
 
+    private computeWeightOfPair = (thisCol: WaterColumn, thatCol: WaterColumn): number =>
+    {
+        const check = this.vm.check
+
+        const thisBottom = check.waterColumnBottom(thisCol)
+        const thisPressure = thisCol.pressure
+        const thatPressure = thatCol.pressure
+
+        if (thisPressure < thatPressure) return -this.computeWeightOfPair(thatCol, thisCol)
+
+        const thatEffectivePressure = max(thatPressure, thisBottom)
+        const weight = thatEffectivePressure - thisPressure
+
+        return weight
+    }
+
     private computeWeights = () =>
     {
         const check = this.vm.check
@@ -274,14 +290,7 @@ extends EventTarget<WaterRunnerEvents>
         for (const neighbour of col.neighbours)
         {
             const { ref } = neighbour
-
-            const thisBottom = check.waterColumnBottom(col)
-            const thisPressure = col.pressure
-            const thatPressure = ref.pressure
-
-            const thatEffectivePressure = max(thatPressure, thisBottom)
-
-            const weight = thatEffectivePressure - thisPressure
+            const weight = this.computeWeightOfPair(col, ref)
 
             neighbour.weight = 0
 
@@ -311,13 +320,13 @@ extends EventTarget<WaterRunnerEvents>
             for (const dir of Direction)
             {
                 const k = Vector5.keyInDirection(dir)
-                col.velocity[k] *= 1 - this.damping
+                col.velocity[k] *= 1 - this.damping * this.tickRate
             }
 
             // Apply gravitational pull
             if (hasWater && !onGround)
             {
-                col.velocity.y -= this.gravity
+                col.velocity.y -= this.gravity * this.tickRate
             }
 
             // Apply gravitational spread
@@ -442,4 +451,22 @@ extends EventTarget<WaterRunnerEvents>
             }
         }
     })()
+
+    private computeTotalVolume = (): number =>
+    {
+        const check = this.vm.check
+
+        let volume = 0
+        for (const col of this.allColumns())
+        {
+            const bottom = check.waterColumnBottom(col)
+            const top = check.waterColumnTop(col)
+            const diff = top - bottom
+
+            if (!Number.isNaN(diff))
+                volume += diff
+        }
+
+        return volume
+    }
 }
