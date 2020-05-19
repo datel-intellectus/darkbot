@@ -45,5 +45,6 @@
     "blockly": "^3.20200402.0",
     "customize-cra": "^0.9.1",
     "react-app-rewired": "^2.1.5"
-  }
+  },
+  "homepage": "/darkbot"
 }

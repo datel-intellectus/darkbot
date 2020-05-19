@@ -105,33 +105,31 @@ extends EventTarget<CircuitRunnerEvents>
                 const nPos = Vector3.stepInDirection(pos, nDir)
                 const neighbours = this.comps[nPos.x][nPos.z]
 
-                // loop through all the components in this direction
+                // loop through all the neighbours in this direction
+                // loop through the planned connections of these neighbours
                 for (const neighbour of neighbours)
+                if  (neighbour.directions !== undefined)
+                for (const nnDir of neighbour.directions)
                 {
-                    if (!neighbour.directions) continue
+                    const nnPos = Vector3.stepInDirection(nPos, nnDir)
 
-                    for (const nnDir of neighbour.directions)
-                    {
-                        const nnPos = Vector3.stepInDirection(nPos, nnDir)
+                    // neighbour connects somewhere else, check next connection
+                    if (nnPos.x !== pos.x || nnPos.z !== pos.z) continue
 
-                        // neighbour connects back to `thisComponent`
-                        if (nnPos.x === pos.x && nnPos.z === pos.z)
-                        {
-                            const connection: Connection = {
-                                components: [thisComponent, neighbour],
-                                potential: 0
-                            }
-
-                            thisComponent.connections.push(connection)
-                            neighbour.connections.push(connection)
-
-                            // from `neighbour.directions` remove `nnDir`
-                            neighbour.directions.splice( neighbour.directions.indexOf(nnDir), 1 )
-
-                            // this direction is connected, let's move on!
-                            continue componentDirectionsLoop
-                        }
+                    // neighbour connects back to `thisComponent`
+                    const connection: Connection = {
+                        components: [thisComponent, neighbour],
+                        potential: 0
                     }
+
+                    thisComponent.connections.push(connection)
+                    neighbour.connections.push(connection)
+
+                    // from `neighbour.directions` remove `nnDir`
+                    neighbour.directions.splice( neighbour.directions.indexOf(nnDir), 1 )
+
+                    // this direction is connected, let's move on!
+                    continue componentDirectionsLoop
                 }
 
                 // neither of the components connected back to `thisComponent`
