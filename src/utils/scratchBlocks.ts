@@ -1,10 +1,12 @@
+import { Block } from "scratch-blocks"
 import ScratchBlocks from "../customBlocks"
-type Block = ScratchBlocks.Block
+type WeakBlock = ScratchBlocks.Block
+type Workspace = ScratchBlocks.Workspace
 
-export function getTopBlock(block: Block): Block|null
+export function getTopBlock(block: WeakBlock): Block|null
 {
 	let previous = block.getParent()
-	let top: Block|null = null
+	let top: WeakBlock|null = null
 
 	while (previous !== null)
 	{
@@ -12,13 +14,13 @@ export function getTopBlock(block: Block): Block|null
 		previous = top.getParent()
 	}
 
-	return top
+	return top as Block
 }
 
-export function getBottomBlock(block: Block): Block|null
+export function getBottomBlock(block: WeakBlock): Block|null
 {
 	let next = block.getNextBlock()
-	let bottom: Block|null = null
+	let bottom: WeakBlock|null = null
 
 	while (next !== null)
 	{
@@ -26,15 +28,29 @@ export function getBottomBlock(block: Block): Block|null
 		next = bottom.getNextBlock()
 	}
 
-	return bottom
+	return bottom as Block
 }
 
-export function appendChild(parent: Block, child: Block)
+export function countChildren(block: WeakBlock): number
+{
+	let next = block.getNextBlock()
+	let count = 0
+
+	while (next !== null)
+	{
+		count++
+		next = next.getNextBlock()
+	}
+
+	return count
+}
+
+export function appendChild(parent: WeakBlock, child: WeakBlock)
 {
 	parent.nextConnection.connect(child.previousConnection)
 }
 
-export function cancelInsertion(block: Block)
+export function cancelInsertion(block: WeakBlock)
 {
 	const next = block.getNextBlock() as Block|null
 	const prev = block.getPreviousBlock() as Block|null
@@ -47,4 +63,24 @@ export function cancelInsertion(block: Block)
 		appendChild(prev, next)
 
 	block.dispose(false)
+}
+
+
+export function createBlock(
+	workspace: Workspace,
+	prototypeName: string,
+	options: Partial<{
+		id: string,
+		insertionMarker: boolean
+	}> = {}): Block
+{
+	// https://stackoverflow.com/questions/56234377/how-to-render-a-block-in-blockly
+
+	const block = workspace.newBlock(prototypeName, options.id) as Block
+
+	if (options.insertionMarker) block.setInsertionMarker(true)
+
+	block.initSvg()
+	block.render()
+	return block
 }

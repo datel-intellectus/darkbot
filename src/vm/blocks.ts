@@ -2,6 +2,7 @@ import { Block } from "scratch-blocks"
 import { Vector3, Direction } from "../spatial"
 import { VirtualMachine } from "."
 import { CheckRunner } from "./check"
+import { Tiles } from "../render/tiles"
 
 export class BlockRunner
 {
@@ -15,7 +16,7 @@ export class BlockRunner
     blockP2: Block
 
     running = false
-    tick = 1000
+    tick = 500
 
     private currentBlockStack: Generator<Block> | undefined
     private currentBlock: Block | undefined
@@ -130,6 +131,10 @@ export class BlockRunner
             default:
                 console.log('unknown command')
         }
+
+        let { x, z, y } = vm.playerPos; y--
+        const tile = vm.tiles[x][z][y]
+        if (tile && tile.type === Tiles.Flower) tile.type = Tiles.Floor
     }
 
     private blockGenerator = (() =>

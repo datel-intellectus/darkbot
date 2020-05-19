@@ -23,6 +23,19 @@ export namespace Tiles
 
         static readonly isSolid = true
     }
+
+    export class Flower<P extends Tiles.Props>
+    extends React.PureComponent<P>
+    {
+        render()
+        {
+            return <ViewElement screenOffset={{ x: -64, y: -32-25 }} {...this.props}>
+                <img src="media/tile_flower.svg" alt="" />
+            </ViewElement>
+        }
+
+        static readonly isSolid = true
+    }
 }
 
 

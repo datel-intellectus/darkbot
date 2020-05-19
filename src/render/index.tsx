@@ -7,6 +7,7 @@ import { Robots } from "./Robots"
 import { ViewElement } from "./ViewElement"
 import { Water } from "./Water"
 import { Circuit } from "./Circuit"
+import { wait } from "../utils/timing"
 
 // export namespace Render
 // {
@@ -40,8 +41,9 @@ extends React.Component<RenderProps, RenderState>
 
 		for (const tile of vm.allTiles())
 		{
-			if (!tile) continue
-			tiles.push(<Tiles.Floor {...tile} key={keyFor(tile)} />)
+            if (!tile) continue
+            const Tile = tile.type
+			tiles.push(<Tile {...tile} key={keyFor(tile)} />)
         }
 
         return (
@@ -61,6 +63,19 @@ extends React.Component<RenderProps, RenderState>
                 </ViewElement>
             </WorldView>
         )
+    }
+
+    componentDidMount = () =>
+    {
+        let w = window as any
+        w.start = this.onStart
+        w.stop = this.onStop
+        w.reset = this.onReset
+
+        this.props.vm.addEventListener('robotChangePosition', async () => {
+            await wait(0)
+            this.forceUpdate()
+        })
     }
 
 	onStart = () =>

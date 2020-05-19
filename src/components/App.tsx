@@ -1,6 +1,5 @@
 import React from 'react'
 import { BlockView, Workspace } from './BlockView'
-import levels from '../levels'
 import { VirtualMachine } from '../vm'
 import { Render } from '../render'
 
@@ -9,7 +8,7 @@ import { Render } from '../render'
 export class App<P, S> extends React.Component<P, S>
 {
 	vm: VirtualMachine|undefined = undefined
-	level = levels[0][2]
+	level = (window as any).level
 
 	getWorkspace = (workspace: Workspace) =>
 	{
@@ -19,6 +18,14 @@ export class App<P, S> extends React.Component<P, S>
 
 	render()
 	{
+		console.log('a')
+
+		if (this.level !== (window as any).level)
+		{
+			console.log('aaa')
+			this.level = (window as any).level
+			this.vm = new VirtualMachine(this.vm!.workspace, this.level)
+		}
 
 		return (
 			<div className="expand flex">
@@ -31,6 +38,12 @@ export class App<P, S> extends React.Component<P, S>
 				{ this.vm === undefined ? [] : <Render vm={this.vm} /> }
 			</div>
 		)
+	}
+
+	componentDidMount = () =>
+	{
+		const w = window as any
+        w.forceUpdate = () => this.forceUpdate()
 	}
 
 	onInsertion() {}
