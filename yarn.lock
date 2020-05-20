@@ -1153,10 +1153,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
-"@meta-utils/events@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@meta-utils/events/-/events-1.2.0.tgz#04648978cb73010d50beee707fcacf411ff710b6"
-  integrity sha512-Rb8RlwoQDmzjH8YvkbYMSSULjSPPS4oDOQDDNvqXRsIrSh8R8asGexb8vMGIWVYOOR9UDxbA9HAe3xOBos9u6Q==
+"@meta-utils/events@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@meta-utils/events/-/events-2.0.0.tgz#b58ff5b48a3a7e32ce02f0562525b4a4a80f5b13"
+  integrity sha512-XPyeU64NglJjgndPgjlPkJ2YGXUAyY3gRQOZ8oZXSeGA6rsT2XXR1+/kLz2GU+fOkPUkl5yTyMWi6zwi9fFhMw==
   dependencies:
     "@meta-utils/types" "^1.0.0"
 
@@ -1328,6 +1328,11 @@
   resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-7.2.1.tgz#2ad4e844175a3738cb9e7064be5ea070b8863a1c"
   integrity sha512-oZ0Ib5I4Z2pUEcoo95cT1cr6slco9WY7yiPpG+RGNkj8YcYgJnM7pXmYmorNOReh8MIGcKSqXyeGjxnr8YiZbA==
 
+"@tweenjs/tween.js@^18.5.0":
+  version "18.5.0"
+  resolved "https://registry.yarnpkg.com/@tweenjs/tween.js/-/tween.js-18.5.0.tgz#f2aa9e6052c6a314d85c9a8034146f9ae6d4e339"
+  integrity sha512-/qyhdvbc6vWsFuiK7Wq74ZMu1F/9sFRlBv2qnjeu70XI0HRC8zOfUqbXT2irVLCSVuCI/fI7HphGdbsbyQ/Q5w==
+
 "@types/babel__core@^7.1.0":
   version "7.1.6"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.6.tgz#16ff42a5ae203c9af1c6e190ed1f30f83207b610"
@@ -1489,6 +1494,11 @@
     "@types/react-dom" "*"
     "@types/testing-library__dom" "*"
     pretty-format "^25.1.0"
+
+"@types/tween.js@^18.5.1":
+  version "18.5.1"
+  resolved "https://registry.yarnpkg.com/@types/tween.js/-/tween.js-18.5.1.tgz#8fb4e533e8b595d272d38f1f07863a28c8055fcc"
+  integrity sha512-DWLolZlt5EsP7JnFLkyCrZppCgiA4HbiAEpZLpBTHlvE1odC40QdUNf0c0ZXKXlNYnqEzbBg9DlbX/RfzWz3yQ==
 
 "@types/yargs-parser@*":
   version "15.0.0"

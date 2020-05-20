@@ -91,6 +91,13 @@ extends React.Component<P>
 
             default:
                 return 'unknown'
+
+            case 'battery':
+                return 'battery'
+
+            case 'coil':
+                return 'coil'
+
         }
     }
 

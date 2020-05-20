@@ -132,9 +132,11 @@ export class BlockRunner
                 console.log('unknown command')
         }
 
+        // TODO remove
         let { x, z, y } = vm.playerPos; y--
         const tile = vm.tiles[x][z][y]
-        if (tile && tile.type === Tiles.Flower) tile.type = Tiles.Floor
+        const flowersGrown = ((window as any).flowerState ?? 5) === 5
+        if (tile && tile.type.name === "Flower" && flowersGrown) tile.type = Tiles.Floor
     }
 
     private blockGenerator = (() =>

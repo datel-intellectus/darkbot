@@ -1,7 +1,6 @@
 import React from "react"
 import { keyFor } from "../utils/keymaker"
 import { VirtualMachine } from "../vm"
-import { Tiles } from "./tiles"
 import { WorldView } from "./WorldView"
 import { Robots } from "./Robots"
 import { ViewElement } from "./ViewElement"
@@ -49,6 +48,7 @@ extends React.Component<RenderProps, RenderState>
         return (
             <WorldView id="worldview">
                 {tiles}
+                {vm.entities.list}
                 <Robots  vm={vm} />
                 <Water   vm={vm} />
                 <Circuit vm={vm} />

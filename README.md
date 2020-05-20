@@ -16,3 +16,4 @@ NOTE: On Windows there are some problems with loading assets. Related to [this b
 
 ## Attribution
 Temporary robot artwork ([`rust-sprites`](https://opengameart.org/content/rust-sprites)) by Mikhail from [virtualtoy.me](http://virtualtoy.me).
+Temporary flower artwork ([LPC Flower Growth Cycle](https://opengameart.org/content/lpc-flower-grow-cycle)) by [Sharm](https://opengameart.org/users/sharm), [William.Thompsonj](https://opengameart.org/users/williamthompsonj) and [madmarcel](https://opengameart.org/users/madmarcel)

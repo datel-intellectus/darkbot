@@ -4,7 +4,7 @@ import { Tiles } from "./render/tiles"
 export default interface Level
 {
 	series: number
-	level: number
+	episode: number
 	mainBlocks: number
 	blueBlocks: number
 	redBlocks: number

@@ -25,16 +25,39 @@ export namespace Tiles
     }
 
     export class Flower<P extends Tiles.Props>
-    extends React.PureComponent<P>
+    extends React.Component<P>
     {
         render()
         {
+            const tileNo = (window as any).flowerState ?? 5
             return <ViewElement screenOffset={{ x: -64, y: -32-25 }} {...this.props}>
-                <img src="media/tile_flower.svg" alt="" />
+                <img src={`media/tile_flower_${tileNo}.svg`} alt="" />
             </ViewElement>
         }
 
         static readonly isSolid = true
+    }
+
+    export class Steel<P extends Tiles.Props>
+    extends React.Component<P>
+    {
+        render()
+        {
+            return <ViewElement screenOffset={{ x: -64, y: -32 }} {...this.props}>
+                <img src="media/tile_steel.svg" alt="" />
+            </ViewElement>
+        }
+    }
+
+    export class StaticWater<P extends Tiles.Props>
+    extends React.PureComponent<P>
+    {
+        render()
+        {
+            return <ViewElement screenOffset={{ x: -64, y: -32 }} {...this.props}>
+                <img src="media/water_full.svg" alt="" />
+            </ViewElement>
+        }
     }
 }
 

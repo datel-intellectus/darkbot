@@ -8,6 +8,7 @@ import { BlockRunner } from "./blocks"
 import { WaterRunner } from "./water"
 import { CheckRunner } from "./check"
 import { CircuitRunner } from "./circuits"
+import { EntityManager } from "./entities"
 
 
 // Events
@@ -26,6 +27,8 @@ export interface RotationEvent
 
 export interface VirtualMachineEvents
 {
+    loaded: {}
+
     robotMove: TranslationEvent
     robotTurn: RotationEvent
     robotChangePosition: TranslationEvent & RotationEvent
@@ -40,6 +43,8 @@ export interface VirtualMachineEvents
 
 export class VirtualMachine extends EventTarget<VirtualMachineEvents>
 {
+    loaded: boolean = false
+
     playerPos: Vector3 = { x: 0, y: 0, z: 0 }
     playerDir: Direction = Direction.NE
 
@@ -50,8 +55,9 @@ export class VirtualMachine extends EventTarget<VirtualMachineEvents>
     readonly blocks: BlockRunner
     readonly water: WaterRunner
     readonly circuits: CircuitRunner
+    readonly entities: EntityManager
 
-    gravity: number = 1
+    gravity: number = 2
     tick: number = 1000
 
     constructor(public workspace: Workspace, public level: Level)
@@ -79,8 +85,12 @@ export class VirtualMachine extends EventTarget<VirtualMachineEvents>
         this.blocks = new BlockRunner(this)
         this.water = new WaterRunner(this)
         this.circuits = new CircuitRunner(this)
+        this.entities = new EntityManager(this)
 
         ;(window as any).virtualMachine = this
+
+        this.loaded = true
+        this.dispatchEvent('loaded', {})
     }
 
     allTiles = (() =>

@@ -4,7 +4,7 @@ import { Direction, Vector3 } from "../spatial"
 import { makeMultidimArray } from "../utils/multidim"
 const { NW, NE, SE, SW } = Direction
 
-export type ComponentType = 'wire' | 'unknown'
+export type ComponentType = 'wire' | 'battery' | 'coil' | 'unknown'
 
 export interface Component
 {
@@ -211,6 +211,22 @@ extends EventTarget<CircuitRunnerEvents>
                 {
                     x, z,
                     type: 'wire',
+                    directions: [SE, NW],
+                    connections: []
+                }]
+
+            case 'b':
+                return [{
+                    x, z,
+                    type: 'battery',
+                    directions: [SE, NW],
+                    connections: []
+                }]
+
+            case 'c':
+                return [{
+                    x, z,
+                    type: 'coil',
                     directions: [SE, NW],
                     connections: []
                 }]

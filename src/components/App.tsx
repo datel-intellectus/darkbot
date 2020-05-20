@@ -18,11 +18,8 @@ export class App<P, S> extends React.Component<P, S>
 
 	render()
 	{
-		console.log('a')
-
 		if (this.level !== (window as any).level)
 		{
-			console.log('aaa')
 			this.level = (window as any).level
 			this.vm = new VirtualMachine(this.vm!.workspace, this.level)
 		}

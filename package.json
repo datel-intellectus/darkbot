@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@meta-utils/events": "^1.2.0",
+    "@meta-utils/events": "^2.0.0",
     "@meta-utils/types": "^1.0.1",
+    "@tweenjs/tween.js": "^18.5.0",
     "node-enumerable": "^5.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -42,6 +43,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "@types/tween.js": "^18.5.1",
     "blockly": "^3.20200402.0",
     "customize-cra": "^0.9.1",
     "react-app-rewired": "^2.1.5"
