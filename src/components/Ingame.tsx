@@ -5,7 +5,7 @@ import { Render } from '../render'
 
 
 
-export class App<P, S> extends React.Component<P, S>
+export class Ingame<P, S> extends React.Component<P, S>
 {
 	vm: VirtualMachine|undefined = undefined
 	level = (window as any).level
@@ -48,4 +48,4 @@ export class App<P, S> extends React.Component<P, S>
 
 }
 
-export default App
+export default Ingame

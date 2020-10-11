@@ -7,8 +7,10 @@ import s02e03 from "./s02e03"
 import s02e04 from "./s02e04"
 import s02e05 from "./s02e05"
 import s02e06 from "./s02e06"
+import s02e07 from "./s02e07"
+import s02e08 from "./s02e08"
 
 export default [
 	[s01e01, s01e02, s01e03],
-	[s02e01, s02e02, s02e03, s02e04, s02e05, s02e06]
+	[s02e01, s02e02, s02e03, s02e04, s02e05, s02e06, s02e07, s02e08]
 ] as const

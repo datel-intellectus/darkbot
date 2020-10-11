@@ -11,7 +11,7 @@ const level: Level =
 	player:
 	{
 		startingPosition: { x: 0, y: 1, z: 1 },
-		startingDirection: 1
+		startingDirection: 3
 	},
 
 	tiles: [

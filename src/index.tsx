@@ -2,7 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import TWEEN from '@tweenjs/tween.js'
 import './index.css'
-import App from './components/App'
+import Ingame from './components/Ingame'
+import LevelSelect from "./components/LevelSelect";
 import * as serviceWorker from './serviceWorker'
 import { VirtualMachine } from './vm'
 import { Workspace } from './components/BlockView'
@@ -15,6 +16,7 @@ import Level from './level'
 import { Tiles, Tile_Props } from './render/tiles'
 import { Vector3 } from './spatial'
 import { WaterRunner } from './vm/water'
+import { ViewElement } from './render/ViewElement'
 const { min } = Math
 
 type Writealso<T> = { -readonly [P in keyof T]: T[P]; }
@@ -34,7 +36,7 @@ declare let window: Window & {
 window.level = levels[1][0]
 
 ReactDOM.render(
-		<App />,
+	<LevelSelect />,
 	document.getElementById('root')
 )
 
@@ -170,6 +172,80 @@ window.addEventListener('keydown', async e =>
 			break
 		}
 
+		case 'k':
+		{
+			const worldPosition = { x: 0, y: 3, z: 2 }
+
+			class Basketball<P extends Vector3> extends React.Component<P>
+			{
+				render()
+				{
+					return <ViewElement screenOffset={{ x: -32, y: -32 }} worldPosition={this.props}>
+						<img src="media/basketball.svg" alt="" />
+					</ViewElement>
+				}
+
+				static readonly isSolid = true
+			}
+
+			let state = { gravity: 5, damping: 0 }
+			let vy = 5
+			let lastTime: number | undefined
+
+			const animate = (time: number) => {
+				if (vm === window.virtualMachine) requestAnimationFrame(animate)
+				if (lastTime === undefined) lastTime = time
+
+				const dt = time - lastTime
+				lastTime = time
+
+				worldPosition.y += vy * dt / 1000
+				vy -= state.gravity * dt / 1000
+
+				vy *= 1 - state.damping
+
+				if (worldPosition.y < 1) vy = -vy * .95
+
+				vm.entities.list = [<Basketball {...worldPosition} key='basketball' />]
+				window.forceUpdate()
+			}
+
+			requestAnimationFrame(animate)
+
+			await wait(5000)
+
+			const animationCompleted = createPromise()
+
+			new TWEEN.Tween(state)
+			.to({ gravity: 0, damping: 1 }, 2000)
+			.easing(TWEEN.Easing.Exponential.In)
+			.onComplete(animationCompleted.resolve)
+			.start()
+
+			await animationCompleted.promise
+			await wait(1500)
+
+			for (const y of range(1,5))
+			{
+				vm.playerPos.y++
+				window.forceUpdate()
+
+				await wait(200)
+
+				const tile: Tile_Props = {
+					worldPosition: { x: 0, y, z: 0 },
+					type: Tiles.Floor
+				}
+				vm.tiles[0][0][y] = tile
+
+				window.forceUpdate()
+
+				await wait(1000)
+			}
+
+			break
+		}
+
 		case 'r':
 		{
 			window.reset()
@@ -224,6 +300,15 @@ window.addEventListener('keydown', async e =>
 			window.forceUpdate()
 			break
 
+		case '7':
+			window.level = levels[1][6]
+			window.forceUpdate()
+			break
+
+		case '8':
+			window.level = levels[1][7]
+			window.forceUpdate()
+			break
 
 		default:
 			console.log(e.key)

@@ -1,6 +1,5 @@
 import { VirtualMachine } from "."
 import { CheckRunner } from "./check"
-import { ViewElement } from "../render/ViewElement"
 
 export class EntityManager
 {
@@ -9,7 +8,7 @@ export class EntityManager
         return this.vm.check
     }
 
-    list: ViewElement[] = []
+    list: JSX.Element[] = []
 
     constructor(public vm: VirtualMachine) {}
 }

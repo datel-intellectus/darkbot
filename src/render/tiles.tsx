@@ -59,6 +59,97 @@ export namespace Tiles
             </ViewElement>
         }
     }
+
+    export class Grass<P extends Tiles.Props>
+    extends React.PureComponent<P>
+    {
+        render()
+        {
+            return <ViewElement screenOffset={{ x: -64, y: -32 }} {...this.props}>
+                <img src="media/NORM_NOTHING.svg" alt="" />
+            </ViewElement>
+        }
+
+        static readonly isSolid = true
+    }
+
+    export class PathNESE<P extends Tiles.Props>
+    extends React.PureComponent<P>
+    {
+        render()
+        {
+            return <ViewElement screenOffset={{ x: -64, y: -32 }} {...this.props}>
+                <img src="media/NORM_C.svg" alt="" />
+            </ViewElement>
+        }
+
+        static readonly isSolid = true
+    }
+
+    export class PathNESW<P extends Tiles.Props>
+    extends React.PureComponent<P>
+    {
+        render()
+        {
+            return <ViewElement screenOffset={{ x: -64, y: -32 }} {...this.props}>
+                <img src="media/NORM_PRAVOLEVA.svg" alt="" />
+            </ViewElement>
+        }
+
+        static readonly isSolid = true
+    }
+
+    export class PathNENW<P extends Tiles.Props>
+    extends React.PureComponent<P>
+    {
+        render()
+        {
+            return <ViewElement screenOffset={{ x: -64, y: -32 }} {...this.props}>
+                <img src="media/NORM_V.svg" alt="" />
+            </ViewElement>
+        }
+
+        static readonly isSolid = true
+    }
+
+    export class PathSESW<P extends Tiles.Props>
+    extends React.PureComponent<P>
+    {
+        render()
+        {
+            return <ViewElement screenOffset={{ x: -64, y: -32 }} {...this.props}>
+                <img src="media/NORM_A.svg" alt="" />
+            </ViewElement>
+        }
+
+        static readonly isSolid = true
+    }
+
+    export class PathSENW<P extends Tiles.Props>
+    extends React.PureComponent<P>
+    {
+        render()
+        {
+            return <ViewElement screenOffset={{ x: -64, y: -32 }} {...this.props}>
+                <img src="media/NORM_LEVOPRAV.svg" alt="" />
+            </ViewElement>
+        }
+
+        static readonly isSolid = true
+    }
+
+    export class PathSWNW<P extends Tiles.Props>
+    extends React.PureComponent<P>
+    {
+        render()
+        {
+            return <ViewElement screenOffset={{ x: -64, y: -32 }} {...this.props}>
+                <img src="media/NORM_D.svg" alt="" />
+            </ViewElement>
+        }
+
+        static readonly isSolid = true
+    }
 }
 
 
