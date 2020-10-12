@@ -40,7 +40,6 @@ let global:
 
 
 export interface BlockViewProps
-extends React.Props<unknown>
 {
 	id?: string,
 	onInsertion?: (block: Block, parent: Block) => void,
@@ -48,8 +47,7 @@ extends React.Props<unknown>
 	getWorkspace?: (workspace: Workspace) => void
 }
 
-export class BlockView<P extends BlockViewProps = BlockViewProps, S = {}>
-extends React.Component<P, S>
+export class BlockView extends React.Component<BlockViewProps>
 {
 	id: string =
 		this.props.id && isIdUnique(this.props.id!)

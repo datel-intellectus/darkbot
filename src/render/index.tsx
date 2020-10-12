@@ -20,6 +20,7 @@ import { wait } from "../utils/timing"
 export interface RenderProps
 {
     vm: VirtualMachine
+	goToLevelSelect: () => void
 }
 
 interface RenderState
@@ -54,6 +55,7 @@ extends React.Component<RenderProps, RenderState>
                 <Circuit vm={vm} />
 
                 <ViewElement worldPosition={{x:0,y:0,z:0}} screenOffset={{x:-200,y:-200}}>
+                    <button onClick={this.props.goToLevelSelect}>Exit</button>
                     {
                         this.state.reset
                         ? <button onClick={this.onReset}>Reset</button>

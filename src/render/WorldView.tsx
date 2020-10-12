@@ -62,7 +62,9 @@ extends React.Component<P, WorldViewState>
 
 	onResize = () =>
 	{
-		let boundingRect = this.element.current!.getBoundingClientRect()
-		this.setState({ width: boundingRect.width, height: boundingRect.height })
+		const el = this.element.current
+		if (!el) return
+		const { width, height } = el.getBoundingClientRect()
+		this.setState({ width, height })
 	}
 }

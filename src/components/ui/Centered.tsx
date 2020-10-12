@@ -10,13 +10,18 @@ const defaultStyle: CSSProperties = {
     width: '100%'
 }
 
-export interface CenteredProps { style?: CSSProperties }
+export interface CenteredProps
+{
+    style?: CSSProperties
+    dir?: CSSProperties['flexDirection']
+}
 
 export class Centered extends React.PureComponent<CenteredProps>
 {
     render()
     {
-        return <div style={{...defaultStyle, ...this.props.style}}>
+        const { style, dir } = this.props
+        return <div style={{...defaultStyle, flexDirection: dir,  ...style}}>
             {this.props.children}
         </div>
     }

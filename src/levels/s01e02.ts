@@ -10,39 +10,15 @@ const level: Level =
 
 	player:
 	{
-		startingPosition: { x: 0, y: 4, z: 0 },
-		startingDirection: 1
+		startingPosition: { x: 0, y: 1, z: 0 },
+		startingDirection: 3
 	},
 
 	tiles: [
 		[
-			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
-			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ]
-		],
-		[
-			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
-			[ {type: "Floor"}, undefined,       undefined,       undefined,       {type: "Floor"} ]
-		],
-		[
-			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
-			[ {type: "Floor"}, undefined,       {type: "Floor"}, undefined,       {type: "Floor"} ]
-		],
-		[
-			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
-			[ {type: "Floor"}, undefined,       {type: "Floor"}, undefined,       {type: "Floor"} ]
-		],
-		[
-			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
-			[ {type: "Floor"}, undefined,       {type: "Floor"}, undefined,       {type: "Floor"} ]
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Flower"} ]
 		]
 	],
-
-	water: {
-		height: [
-			[ 0, 0, 0, 0, 0 ],
-			[ 0, 5, 0, 0, 0 ]
-		]
-	}
 }
 
 export default level

@@ -5,7 +5,10 @@ const defaultStyle: CSSProperties = {
     background: '#ccc',
     border: '2px solid #333',
     borderRadius: '5px',
-    padding: '10px'
+    padding: '10px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
 }
 
 export interface ButtonProps
@@ -19,7 +22,7 @@ export class Button extends React.PureComponent<ButtonProps>
     render()
     {
         return <div onClick={this.props.onClick} style={{...defaultStyle, ...this.props.style}}>
-            {this.props.children}
+            <span>{this.props.children}</span>
         </div>
     }
 }

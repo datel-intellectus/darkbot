@@ -2,27 +2,66 @@ import React from 'react'
 import { BlockView, Workspace } from './BlockView'
 import { VirtualMachine } from '../vm'
 import { Render } from '../render'
+import Level from '../level'
+import levels from "../levels"
 
-
-
-export class Ingame<P, S> extends React.Component<P, S>
+export interface IngameProps
 {
-	vm: VirtualMachine|undefined = undefined
-	level = (window as any).level
+	series: number
+	episode: number
+	launchLevel: (s: number, e: number) => void
+	goToLevelSelect: () => void
+}
+
+interface IngameState
+{
+	vm?: VirtualMachine
+	level: Level
+}
+
+export class Ingame extends React.Component<IngameProps, IngameState>
+{
+	state: IngameState = {
+		vm: undefined,
+		level: levels[this.props.series-1][this.props.episode-1]
+	}
+
+	componentDidUpdate(prevProps: IngameProps, prevState: IngameState)
+	{
+		const { series, episode } = this.props
+		if (prevProps.series !== series || prevProps.episode !== episode)
+		{
+			const level = levels[series-1][episode-1]
+			this.setState({ level })
+
+			if (this.state.vm)
+			{
+				const { workspace } = this.state.vm
+				const vm = new VirtualMachine(workspace, level)
+				this.setState({ vm })
+
+				const w = window as any
+				w.vm = vm
+			}
+		}
+	}
 
 	getWorkspace = (workspace: Workspace) =>
 	{
-		this.vm = new VirtualMachine(workspace, this.level)
-		this.forceUpdate()
+		const vm = new VirtualMachine(workspace, this.state.level)
+		this.setState({ vm })
+
+		const w = window as any
+		w.vm = vm
 	}
 
 	render()
 	{
-		if (this.level !== (window as any).level)
-		{
-			this.level = (window as any).level
-			this.vm = new VirtualMachine(this.vm!.workspace, this.level)
-		}
+		const w = window as any
+		w.forceUpdate = () => this.forceUpdate()
+
+		const { vm } = this.state
+		const { goToLevelSelect } = this.props
 
 		return (
 			<div className="expand flex">
@@ -32,15 +71,9 @@ export class Ingame<P, S> extends React.Component<P, S>
 					onInsertionPreview={this.onInsertionPreview}
 					getWorkspace={this.getWorkspace}
 				/>
-				{ this.vm === undefined ? [] : <Render vm={this.vm} /> }
+				{ vm && <Render vm={vm} goToLevelSelect={goToLevelSelect} /> }
 			</div>
 		)
-	}
-
-	componentDidMount = () =>
-	{
-		const w = window as any
-        w.forceUpdate = () => this.forceUpdate()
 	}
 
 	onInsertion() {}
