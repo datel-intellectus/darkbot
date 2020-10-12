@@ -22,28 +22,79 @@ const level: Level =
 			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
 			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
 			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
 		],
 		[
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, undefined,       undefined,       undefined,       undefined,       {type: "Floor"} ],
+			[ {type: "Floor"}, undefined,       undefined,       undefined,       undefined,       {type: "Floor"} ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Steel"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+			[ {type: "Floor"}, {type: "Floor"}, undefined, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
 			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
 			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
 			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
 			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
 			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
-			[ undefined, undefined, undefined, {type: "Steel"}, undefined, undefined, ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+		],
+		[
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, undefined,       undefined,       undefined,       undefined,       {type: "Floor"} ],
+			[ {type: "Floor"}, undefined,       undefined,       undefined,       undefined,       {type: "Floor"} ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+			[ undefined, undefined, undefined, undefined, {type: "Flower"}, undefined, ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+		],
+		[
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, undefined,       undefined,       undefined,       undefined,       {type: "Floor"} ],
+			[ {type: "Floor"}, undefined,       undefined,       undefined,       undefined,       {type: "Floor"} ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
 		],
 	],
 
 	water: {
-		height: [[]]
+		height: [
+			[ 0, 0, 0, 0, 0, 0 ],
+			[ 0, 2.5, 2.5, 2.5, 2.5, 0],
+			[ 0, 2.5, 2.5, 2.5, 2.5, 0],
+			[ 0, 0, 0, 0, 0, 0 ],
+		]
 	},
 
 	circuit: {
 		scheme:
 			'      ' + '\n' +
-			'┌b───┐' + '\n' +
-			'└──c─┘' + '\n' +
 			'      ' + '\n' +
-			'      ' + '\n'
+			'      ' + '\n' +
+			'      ' + '\n' +
+			'      ' + '\n' +
+			'      ' + '\n' +
+			'      ' + '\n' +
+			' ┌c─┐ ' + '\n' +
+			' └─b┘ ' + '\n' +
+			'      '
 	}
 }
 

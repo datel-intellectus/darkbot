@@ -16,19 +16,42 @@ const level: Level =
 
 	tiles: [
 		[
-			[ undefined,       undefined,       undefined,       {type: "Floor"}, {type: "Flower"} ],
-			[ undefined,       undefined,       {type: "Floor"}, {type: "Floor"}, undefined       ],
-			[ undefined,       {type: "Floor"}, {type: "Floor"}, undefined,       undefined       ],
-			[ {type: "Floor"}, {type: "Floor"}, undefined,       undefined,       undefined       ],
-			[ {type: "Floor"}, undefined,       undefined,       undefined,       undefined       ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+		],
+		[
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, undefined       ],
+			[ {type: "Floor"}, undefined,       undefined,       {type: "Floor"}, undefined       ],
+			[ {type: "Floor"}, undefined,       undefined,       {type: "Floor"}, undefined       ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, undefined       ],
+			[ undefined,       undefined,       undefined,       undefined,       undefined       ],
+			[ undefined,       undefined,       undefined,       undefined,       undefined       ],
+			[ undefined,       undefined,       undefined,       undefined,       undefined       ],
+			[ undefined,       undefined,       undefined,       undefined,       undefined       ],
+		],
+		[
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, undefined       ],
+			[ {type: "Floor"}, undefined,       undefined,       {type: "Floor"}, undefined       ],
+			[ {type: "Floor"}, undefined,       undefined,       {type: "Floor"}, undefined       ],
+			[ {type: "Floor"}, {type: "Floor"}, undefined,       {type: "Floor"}, undefined       ],
+			[ undefined,       undefined,       undefined,       undefined,       undefined       ],
+			[ undefined,       undefined,       undefined,       undefined,       undefined       ],
+			[ undefined,       undefined,       undefined,       undefined,       undefined       ],
+			[ undefined,       undefined,       undefined,       undefined,       undefined       ],
 		]
 	],
 
 	water: {
 		height: [
 			[0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0],
+			[0, 2, 2, 0, 0],
+			[0, 2, 2, 0, 0],
 			[0, 0, 0, 0, 0],
 			[0, 0, 0, 0, 0],
 		]

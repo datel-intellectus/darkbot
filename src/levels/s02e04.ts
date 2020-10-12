@@ -10,24 +10,26 @@ const level: Level =
 
 	player:
 	{
-		startingPosition: { x: 2, y: 2, z: 4 },
+		startingPosition: { x: 0, y: 1, z: 4 },
 		startingDirection: 1
 	},
 
 	tiles: [
 		[
-			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
-			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
-			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
-			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
-			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ]
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
+			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
 		],
 		[
-			[ {type: "Floor"}, {type: "Floor"}, {type: "Floor"} ],
-			[ {type: "Flower"}, undefined,      {type: "Floor"} ],
-			[ {type: "Flower"}, undefined,      {type: "Floor"} ],
-			[ {type: "Flower"}, undefined,      {type: "Floor"} ],
-			[ {type: "Flower"}, undefined,      {type: "Floor"} ]
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+			[ undefined, undefined, undefined, undefined, undefined, undefined, ],
+			[ undefined, undefined, undefined, {type: "Steel"}, undefined, undefined, ],
 		],
 	],
 
@@ -37,7 +39,11 @@ const level: Level =
 
 	circuit: {
 		scheme:
-			' ? '
+			'      ' + '\n' +
+			'┌b───┐' + '\n' +
+			'└──c─┘' + '\n' +
+			'      ' + '\n' +
+			'      ' + '\n'
 	}
 }
 
